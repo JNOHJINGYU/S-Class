@@ -1104,10 +1104,45 @@
           <div class="int-code">523A / 524A / 525A</div>
         </div>
       </div>
-      <div class="int-card">
-        <div class="ph int-ph"><span class="ph-label">INTERIOR IMAGE</span></div>
+      <!-- MAYBACH EXCL NAPPA LEATHER CARD with slider -->
+      <div class="int-card int-card-leather" style="cursor:default;">
+        <div class="int-slider" id="maybachNappaSlider">
+          <div class="int-slider-track" id="maybachNappaTrack">
+            <div class="int-slide" onclick="openMaybachNappaLightbox(0)">
+              <img src="maybach_nappa_white.png" alt="마이바흐 익스클루시브 나파 레더 · 화이트">
+              <div class="int-slide-label">화이트</div>
+              <div class="zoom-hint">⊕ 전체화면</div>
+            </div>
+            <div class="int-slide" onclick="openMaybachNappaLightbox(1)">
+              <img src="maybach_nappa_black.png" alt="마이바흐 익스클루시브 나파 레더 · 블랙">
+              <div class="int-slide-label">블랙</div>
+              <div class="zoom-hint">⊕ 전체화면</div>
+            </div>
+            <div class="int-slide" onclick="openMaybachNappaLightbox(2)">
+              <img src="maybach_nappa_brown.png" alt="마이바흐 익스클루시브 나파 레더 · 브라운">
+              <div class="int-slide-label">브라운</div>
+              <div class="zoom-hint">⊕ 전체화면</div>
+            </div>
+            <div class="int-slide" onclick="openMaybachNappaLightbox(3)">
+              <img src="maybach_nappa_beige.png" alt="마이바흐 익스클루시브 나파 레더 · 베이지">
+              <div class="int-slide-label">베이지</div>
+              <div class="zoom-hint">⊕ 전체화면</div>
+            </div>
+          </div>
+          <button class="slider-btn slider-prev" onclick="slideMaybachNappa(-1)">&#8249;</button>
+          <button class="slider-btn slider-next" onclick="slideMaybachNappa(1)">&#8250;</button>
+          <div class="slider-dots" id="maybachNappaDots">
+            <span class="slider-dot active" onclick="goMaybachNappaSlide(0)"></span>
+            <span class="slider-dot" onclick="goMaybachNappaSlide(1)"></span>
+            <span class="slider-dot" onclick="goMaybachNappaSlide(2)"></span>
+            <span class="slider-dot" onclick="goMaybachNappaSlide(3)"></span>
+          </div>
+        </div>
         <div class="int-info">
-          <div class="int-name">마이바흐 익스클루시브 나파 레더</div>
+          <div class="int-name" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            마이바흐 익스클루시브 나파 레더
+            <span style="font-size:9px;letter-spacing:.1em;color:#b08850;border:1px solid rgba(176,136,80,0.5);padding:3px 9px;border-radius:20px;font-weight:500;background:rgba(176,136,80,0.08);">✦ Maybach 전용</span>
+          </div>
           <div class="int-code">533A / 534A / 535A</div>
         </div>
       </div>
@@ -1700,6 +1735,58 @@
     }
   });
 
+  // ── MAYBACH NAPPA SLIDER ──
+  let maybachNappaIdx = 0;
+  const maybachNappaTotal = 4;
+  function updateMaybachNappaSlider() {
+    document.getElementById('maybachNappaTrack').style.transform = `translateX(-${maybachNappaIdx * 100}%)`;
+    document.querySelectorAll('#maybachNappaDots .slider-dot').forEach((d,i) => d.classList.toggle('active', i === maybachNappaIdx));
+  }
+  function slideMaybachNappa(dir) {
+    maybachNappaIdx = (maybachNappaIdx + dir + maybachNappaTotal) % maybachNappaTotal;
+    updateMaybachNappaSlider();
+  }
+  function goMaybachNappaSlide(i) {
+    maybachNappaIdx = i;
+    updateMaybachNappaSlider();
+  }
+
+  // ── MAYBACH NAPPA LIGHTBOX ──
+  let lbMaybachNappaIdx = 0;
+  function updateLbMaybachNappa() {
+    document.getElementById('lbMaybachNappaTrack').style.transform = `translateX(-${lbMaybachNappaIdx * 100}%)`;
+    document.querySelectorAll('#maybachNappaLightbox .lb-dot').forEach((d,i) => d.classList.toggle('active', i === lbMaybachNappaIdx));
+  }
+  function openMaybachNappaLightbox(startIdx) {
+    lbMaybachNappaIdx = startIdx;
+    updateLbMaybachNappa();
+    const lb = document.getElementById('maybachNappaLightbox');
+    lb.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMaybachNappaLightbox() {
+    document.getElementById('maybachNappaLightbox').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function closeMaybachNappaLightboxBg(e) {
+    if (e.target === document.getElementById('maybachNappaLightbox')) closeMaybachNappaLightbox();
+  }
+  function lbMaybachNappaNav(dir) {
+    lbMaybachNappaIdx = (lbMaybachNappaIdx + dir + maybachNappaTotal) % maybachNappaTotal;
+    updateLbMaybachNappa();
+  }
+  function lbMaybachNappaGo(i) {
+    lbMaybachNappaIdx = i;
+    updateLbMaybachNappa();
+  }
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('maybachNappaLightbox').style.display === 'flex') {
+      if (e.key === 'ArrowLeft') lbMaybachNappaNav(-1);
+      if (e.key === 'ArrowRight') lbMaybachNappaNav(1);
+      if (e.key === 'Escape') closeMaybachNappaLightbox();
+    }
+  });
+
   // Lightbox
   function openLightbox(src, caption) {
     const lb = document.getElementById('lightbox');
@@ -1842,6 +1929,41 @@
     </video>
   </div>
   <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<!-- MAYBACH NAPPA LIGHTBOX -->
+<div id="maybachNappaLightbox" onclick="closeMaybachNappaLightboxBg(event)" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.96);align-items:center;justify-content:center;animation:lbFadeIn .2s ease;">
+  <button class="lb-close-btn" onclick="closeMaybachNappaLightbox()">✕</button>
+  <button class="lb-nav-btn" onclick="lbMaybachNappaNav(-1)">&#8249;</button>
+  <div class="lb-leather-wrap">
+    <div class="lb-leather-track-outer">
+      <div class="lb-leather-track" id="lbMaybachNappaTrack">
+        <div class="lb-leather-slide">
+          <img src="maybach_nappa_white.png" alt="마이바흐 익스클루시브 나파 레더 · 화이트">
+          <div class="lb-leather-caption">마이바흐 익스클루시브 나파 레더 · 화이트 (535A)</div>
+        </div>
+        <div class="lb-leather-slide">
+          <img src="maybach_nappa_black.png" alt="마이바흐 익스클루시브 나파 레더 · 블랙">
+          <div class="lb-leather-caption">마이바흐 익스클루시브 나파 레더 · 블랙 (533A)</div>
+        </div>
+        <div class="lb-leather-slide">
+          <img src="maybach_nappa_brown.png" alt="마이바흐 익스클루시브 나파 레더 · 브라운">
+          <div class="lb-leather-caption">마이바흐 익스클루시브 나파 레더 · 브라운 (534A)</div>
+        </div>
+        <div class="lb-leather-slide">
+          <img src="maybach_nappa_beige.png" alt="마이바흐 익스클루시브 나파 레더 · 베이지">
+          <div class="lb-leather-caption">마이바흐 익스클루시브 나파 레더 · 베이지 (535A)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="lb-nav-btn" onclick="lbMaybachNappaNav(1)">&#8250;</button>
+  <div class="lb-dots">
+    <span class="lb-dot active" onclick="lbMaybachNappaGo(0)"></span>
+    <span class="lb-dot" onclick="lbMaybachNappaGo(1)"></span>
+    <span class="lb-dot" onclick="lbMaybachNappaGo(2)"></span>
+    <span class="lb-dot" onclick="lbMaybachNappaGo(3)"></span>
+  </div>
 </div>
 
 </body>
