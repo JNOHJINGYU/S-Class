@@ -558,7 +558,7 @@
     align-items:center; justify-content:center;
     animation:lbFadeIn .2s ease;
   }
-  #leatherLightbox.active, #nappaLightbox.active { display:flex; }
+  #leatherLightbox.active, #nappaLightbox.active, #exclNappaLightbox.active { display:flex; }
   .lb-leather-wrap {
     position:relative; width:92vw; max-width:1300px;
     display:flex; align-items:center; gap:0;
@@ -1068,10 +1068,39 @@
           <div class="int-code">823A / 824A / 825A</div>
         </div>
       </div>
-      <div class="int-card">
-        <div class="ph int-ph"><span class="ph-label">INTERIOR IMAGE</span></div>
+      <!-- EXCLUSIVE NAPPA LEATHER CARD with slider -->
+      <div class="int-card int-card-leather" style="cursor:default;">
+        <div class="int-slider" id="exclNappaSlider">
+          <div class="int-slider-track" id="exclNappaTrack">
+            <div class="int-slide" onclick="openExclNappaLightbox(0)">
+              <img src="int_excl_nappa_beige.png" alt="익스클루시브 나파 가죽 · 베이지">
+              <div class="int-slide-label">베이지</div>
+              <div class="zoom-hint">⊕ 전체화면</div>
+            </div>
+            <div class="int-slide" onclick="openExclNappaLightbox(1)">
+              <img src="int_excl_nappa_black.png" alt="익스클루시브 나파 가죽 · 블랙">
+              <div class="int-slide-label">블랙</div>
+              <div class="zoom-hint">⊕ 전체화면</div>
+            </div>
+            <div class="int-slide" onclick="openExclNappaLightbox(2)">
+              <img src="int_excl_nappa_brown.png" alt="익스클루시브 나파 가죽 · 브라운">
+              <div class="int-slide-label">브라운</div>
+              <div class="zoom-hint">⊕ 전체화면</div>
+            </div>
+          </div>
+          <button class="slider-btn slider-prev" onclick="slideExclNappa(-1)">&#8249;</button>
+          <button class="slider-btn slider-next" onclick="slideExclNappa(1)">&#8250;</button>
+          <div class="slider-dots" id="exclNappaDots">
+            <span class="slider-dot active" onclick="goExclNappaSlide(0)"></span>
+            <span class="slider-dot" onclick="goExclNappaSlide(1)"></span>
+            <span class="slider-dot" onclick="goExclNappaSlide(2)"></span>
+          </div>
+        </div>
         <div class="int-info">
-          <div class="int-name">익스클루시브 나파 가죽</div>
+          <div class="int-name" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            익스클루시브 나파 가죽
+            <span style="font-size:9px;letter-spacing:.1em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 9px;border-radius:20px;font-weight:400;">S580 4M L 기본적용</span>
+          </div>
           <div class="int-code">523A / 524A / 525A</div>
         </div>
       </div>
@@ -1567,6 +1596,57 @@
     }
   });
 
+  // ── EXCL NAPPA SLIDER ──
+  let exclNappaIdx = 0;
+  const exclNappaTotal = 3;
+  function updateExclNappaSlider() {
+    document.getElementById('exclNappaTrack').style.transform = `translateX(-${exclNappaIdx * 100}%)`;
+    document.querySelectorAll('#exclNappaDots .slider-dot').forEach((d,i) => d.classList.toggle('active', i === exclNappaIdx));
+  }
+  function slideExclNappa(dir) {
+    exclNappaIdx = (exclNappaIdx + dir + exclNappaTotal) % exclNappaTotal;
+    updateExclNappaSlider();
+  }
+  function goExclNappaSlide(i) {
+    exclNappaIdx = i;
+    updateExclNappaSlider();
+  }
+
+  // ── EXCL NAPPA LIGHTBOX ──
+  let lbExclNappaIdx = 0;
+  function updateLbExclNappa() {
+    document.getElementById('lbExclNappaTrack').style.transform = `translateX(-${lbExclNappaIdx * 100}%)`;
+    document.querySelectorAll('#exclNappaLightbox .lb-dot').forEach((d,i) => d.classList.toggle('active', i === lbExclNappaIdx));
+  }
+  function openExclNappaLightbox(startIdx) {
+    lbExclNappaIdx = startIdx;
+    updateLbExclNappa();
+    document.getElementById('exclNappaLightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeExclNappaLightbox() {
+    document.getElementById('exclNappaLightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  function closeExclNappaLightboxBg(e) {
+    if (e.target === document.getElementById('exclNappaLightbox')) closeExclNappaLightbox();
+  }
+  function lbExclNappaNav(dir) {
+    lbExclNappaIdx = (lbExclNappaIdx + dir + exclNappaTotal) % exclNappaTotal;
+    updateLbExclNappa();
+  }
+  function lbExclNappaGo(i) {
+    lbExclNappaIdx = i;
+    updateLbExclNappa();
+  }
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('exclNappaLightbox').classList.contains('active')) {
+      if (e.key === 'ArrowLeft') lbExclNappaNav(-1);
+      if (e.key === 'ArrowRight') lbExclNappaNav(1);
+      if (e.key === 'Escape') closeExclNappaLightbox();
+    }
+  });
+
   // ── LEATHER SLIDER ──
   let leatherIdx = 0;
   const leatherTotal = 3;
@@ -1659,6 +1739,36 @@
   });
 
 </script>
+
+<!-- EXCL NAPPA LIGHTBOX -->
+<div id="exclNappaLightbox" onclick="closeExclNappaLightboxBg(event)" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.96);align-items:center;justify-content:center;animation:lbFadeIn .2s ease;">
+  <button class="lb-close-btn" onclick="closeExclNappaLightbox()">✕</button>
+  <button class="lb-nav-btn" onclick="lbExclNappaNav(-1)">&#8249;</button>
+  <div class="lb-leather-wrap">
+    <div class="lb-leather-track-outer">
+      <div class="lb-leather-track" id="lbExclNappaTrack">
+        <div class="lb-leather-slide">
+          <img src="int_excl_nappa_beige.png" alt="익스클루시브 나파 가죽 · 베이지">
+          <div class="lb-leather-caption">익스클루시브 나파 가죽 · 베이지 (524A)</div>
+        </div>
+        <div class="lb-leather-slide">
+          <img src="int_excl_nappa_black.png" alt="익스클루시브 나파 가죽 · 블랙">
+          <div class="lb-leather-caption">익스클루시브 나파 가죽 · 블랙 (523A)</div>
+        </div>
+        <div class="lb-leather-slide">
+          <img src="int_excl_nappa_brown.png" alt="익스클루시브 나파 가죽 · 브라운">
+          <div class="lb-leather-caption">익스클루시브 나파 가죽 · 브라운 (525A)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="lb-nav-btn" onclick="lbExclNappaNav(1)">&#8250;</button>
+  <div class="lb-dots">
+    <span class="lb-dot active" onclick="lbExclNappaGo(0)"></span>
+    <span class="lb-dot" onclick="lbExclNappaGo(1)"></span>
+    <span class="lb-dot" onclick="lbExclNappaGo(2)"></span>
+  </div>
+</div>
 
 <!-- NAPPA LIGHTBOX -->
 <div id="nappaLightbox" onclick="closeNappaLightboxBg(event)">
