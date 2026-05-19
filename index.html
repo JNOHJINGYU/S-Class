@@ -1146,10 +1146,33 @@
           <div class="int-code">533A / 534A / 535A</div>
         </div>
       </div>
-      <div class="int-card int-card-last">
-        <div class="ph int-ph"><span class="ph-label">INTERIOR IMAGE</span></div>
+      <!-- MANUFAKTUR MAYBACH EXCL NAPPA LEATHER CARD with slider -->
+      <div class="int-card int-card-leather int-card-last" style="cursor:default;">
+        <div class="int-slider" id="manufakturSlider">
+          <div class="int-slider-track" id="manufakturTrack">
+            <div class="int-slide" onclick="openManufakturLightbox(0)">
+              <img src="manufaktur_beige.png" alt="MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 베이지">
+              <div class="int-slide-label">베이지 / 골드</div>
+              <div class="zoom-hint">⊕ 전체화면</div>
+            </div>
+            <div class="int-slide" onclick="openManufakturLightbox(1)">
+              <img src="manufaktur_navy.png" alt="MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 네이비">
+              <div class="int-slide-label">네이비 블루</div>
+              <div class="zoom-hint">⊕ 전체화면</div>
+            </div>
+          </div>
+          <button class="slider-btn slider-prev" onclick="slideManufaktur(-1)">&#8249;</button>
+          <button class="slider-btn slider-next" onclick="slideManufaktur(1)">&#8250;</button>
+          <div class="slider-dots" id="manufakturDots">
+            <span class="slider-dot active" onclick="goManufakturSlide(0)"></span>
+            <span class="slider-dot" onclick="goManufakturSlide(1)"></span>
+          </div>
+        </div>
         <div class="int-info">
-          <div class="int-name">MANUFAKTUR 마이바흐 익스클루시브</div>
+          <div class="int-name" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            MANUFAKTUR 마이바흐 익스클루시브 나파 레더
+            <span style="font-size:9px;letter-spacing:.1em;color:#b08850;border:1px solid rgba(176,136,80,0.5);padding:3px 9px;border-radius:20px;font-weight:500;background:rgba(176,136,80,0.08);">✦ Maybach 전용</span>
+          </div>
           <div class="int-code">941A / 991A / 992A / 993A / 996A / 997A</div>
         </div>
       </div>
@@ -1787,6 +1810,58 @@
     }
   });
 
+  // ── MANUFAKTUR SLIDER ──
+  let manufakturIdx = 0;
+  const manufakturTotal = 2;
+  function updateManufakturSlider() {
+    document.getElementById('manufakturTrack').style.transform = `translateX(-${manufakturIdx * 100}%)`;
+    document.querySelectorAll('#manufakturDots .slider-dot').forEach((d,i) => d.classList.toggle('active', i === manufakturIdx));
+  }
+  function slideManufaktur(dir) {
+    manufakturIdx = (manufakturIdx + dir + manufakturTotal) % manufakturTotal;
+    updateManufakturSlider();
+  }
+  function goManufakturSlide(i) {
+    manufakturIdx = i;
+    updateManufakturSlider();
+  }
+
+  // ── MANUFAKTUR LIGHTBOX ──
+  let lbManufakturIdx = 0;
+  function updateLbManufaktur() {
+    document.getElementById('lbManufakturTrack').style.transform = `translateX(-${lbManufakturIdx * 100}%)`;
+    document.querySelectorAll('#manufakturLightbox .lb-dot').forEach((d,i) => d.classList.toggle('active', i === lbManufakturIdx));
+  }
+  function openManufakturLightbox(startIdx) {
+    lbManufakturIdx = startIdx;
+    updateLbManufaktur();
+    const lb = document.getElementById('manufakturLightbox');
+    lb.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeManufakturLightbox() {
+    document.getElementById('manufakturLightbox').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function closeManufakturLightboxBg(e) {
+    if (e.target === document.getElementById('manufakturLightbox')) closeManufakturLightbox();
+  }
+  function lbManufakturNav(dir) {
+    lbManufakturIdx = (lbManufakturIdx + dir + manufakturTotal) % manufakturTotal;
+    updateLbManufaktur();
+  }
+  function lbManufakturGo(i) {
+    lbManufakturIdx = i;
+    updateLbManufaktur();
+  }
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('manufakturLightbox').style.display === 'flex') {
+      if (e.key === 'ArrowLeft') lbManufakturNav(-1);
+      if (e.key === 'ArrowRight') lbManufakturNav(1);
+      if (e.key === 'Escape') closeManufakturLightbox();
+    }
+  });
+
   // Lightbox
   function openLightbox(src, caption) {
     const lb = document.getElementById('lightbox');
@@ -1963,6 +2038,31 @@
     <span class="lb-dot" onclick="lbMaybachNappaGo(1)"></span>
     <span class="lb-dot" onclick="lbMaybachNappaGo(2)"></span>
     <span class="lb-dot" onclick="lbMaybachNappaGo(3)"></span>
+  </div>
+</div>
+
+<!-- MANUFAKTUR MAYBACH EXCL NAPPA LIGHTBOX -->
+<div id="manufakturLightbox" onclick="closeManufakturLightboxBg(event)" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.96);align-items:center;justify-content:center;animation:lbFadeIn .2s ease;">
+  <button class="lb-close-btn" onclick="closeManufakturLightbox()">✕</button>
+  <button class="lb-nav-btn" onclick="lbManufakturNav(-1)">&#8249;</button>
+  <div class="lb-leather-wrap">
+    <div class="lb-leather-track-outer">
+      <div class="lb-leather-track" id="lbManufakturTrack">
+        <div class="lb-leather-slide">
+          <img src="manufaktur_beige.png" alt="MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 베이지/골드">
+          <div class="lb-leather-caption">MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 베이지 / 골드</div>
+        </div>
+        <div class="lb-leather-slide">
+          <img src="manufaktur_navy.png" alt="MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 네이비">
+          <div class="lb-leather-caption">MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 네이비 블루</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="lb-nav-btn" onclick="lbManufakturNav(1)">&#8250;</button>
+  <div class="lb-dots">
+    <span class="lb-dot active" onclick="lbManufakturGo(0)"></span>
+    <span class="lb-dot" onclick="lbManufakturGo(1)"></span>
   </div>
 </div>
 
