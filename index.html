@@ -552,7 +552,7 @@
   }
 
   /* ─── LEATHER LIGHTBOX ─── */
-  #leatherLightbox, #nappaLightbox {
+  #leatherLightbox, #nappaLightbox, #exclNappaLightbox {
     display:none; position:fixed; inset:0; z-index:10000;
     background:rgba(0,0,0,.96);
     align-items:center; justify-content:center;
@@ -1741,7 +1741,7 @@
 </script>
 
 <!-- EXCL NAPPA LIGHTBOX -->
-<div id="exclNappaLightbox" onclick="closeExclNappaLightboxBg(event)" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.96);align-items:center;justify-content:center;animation:lbFadeIn .2s ease;">
+<div id="exclNappaLightbox" onclick="closeExclNappaLightboxBg(event)">
   <button class="lb-close-btn" onclick="closeExclNappaLightbox()">✕</button>
   <button class="lb-nav-btn" onclick="lbExclNappaNav(-1)">&#8249;</button>
   <div class="lb-leather-wrap">
