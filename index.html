@@ -492,6 +492,124 @@
   .fade-in-delay-2 { transition-delay:.2s; }
   .fade-in-delay-3 { transition-delay:.3s; }
 
+  /* ─── LEATHER SLIDER ─── */
+  .int-card-leather { overflow:hidden; }
+  .int-slider {
+    position:relative; overflow:hidden;
+    aspect-ratio:16/10; background:#111;
+  }
+  .int-slider-track {
+    display:flex; height:100%;
+    transition:transform .45s cubic-bezier(.25,.46,.45,.94);
+    will-change:transform;
+  }
+  .int-slide {
+    min-width:100%; height:100%; position:relative;
+    cursor:zoom-in; overflow:hidden; flex-shrink:0;
+  }
+  .int-slide img {
+    width:100%; height:100%; object-fit:cover;
+    display:block;
+    transition:transform .5s cubic-bezier(.25,.46,.45,.94);
+  }
+  .int-slide:hover img { transform:scale(1.04); }
+  .int-slide-label {
+    position:absolute; bottom:10px; left:14px;
+    font-size:10px; letter-spacing:.15em; color:rgba(255,255,255,.7);
+    background:rgba(0,0,0,.45); border:1px solid rgba(255,255,255,.15);
+    border-radius:20px; padding:4px 10px; pointer-events:none;
+  }
+  .int-slide .zoom-hint {
+    position:absolute; bottom:10px; right:14px;
+    background:rgba(0,0,0,.45); border:1px solid rgba(255,255,255,.15);
+    border-radius:20px; padding:4px 10px;
+    font-size:10px; letter-spacing:.12em; color:rgba(255,255,255,.6);
+    opacity:0; transition:opacity .3s; pointer-events:none;
+  }
+  .int-slide:hover .zoom-hint { opacity:1; }
+  .slider-btn {
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:36px; height:36px; border-radius:50%;
+    background:rgba(0,0,0,.5); border:1px solid rgba(255,255,255,.18);
+    color:#fff; font-size:20px; cursor:pointer; z-index:10;
+    display:flex; align-items:center; justify-content:center;
+    transition:all .25s; line-height:1;
+  }
+  .slider-btn:hover { background:rgba(200,170,114,.35); border-color:var(--accent-dim); }
+  .slider-prev { left:10px; }
+  .slider-next { right:10px; }
+  .slider-dots {
+    position:absolute; bottom:10px; left:50%; transform:translateX(-50%);
+    display:flex; gap:6px; z-index:10;
+  }
+  .slider-dot {
+    width:6px; height:6px; border-radius:50%;
+    background:rgba(255,255,255,.3); cursor:pointer;
+    transition:all .3s; border:1px solid rgba(255,255,255,.2);
+  }
+  .slider-dot.active {
+    background:var(--accent); border-color:var(--accent); transform:scale(1.2);
+  }
+
+  /* ─── LEATHER LIGHTBOX ─── */
+  #leatherLightbox {
+    display:none; position:fixed; inset:0; z-index:10000;
+    background:rgba(0,0,0,.96);
+    align-items:center; justify-content:center;
+    animation:lbFadeIn .2s ease;
+  }
+  #leatherLightbox.active { display:flex; }
+  .lb-leather-wrap {
+    position:relative; width:92vw; max-width:1300px;
+    display:flex; align-items:center; gap:0;
+  }
+  .lb-leather-track-outer { overflow:hidden; flex:1; border-radius:4px; }
+  .lb-leather-track {
+    display:flex;
+    transition:transform .4s cubic-bezier(.25,.46,.45,.94);
+  }
+  .lb-leather-slide {
+    min-width:100%; position:relative;
+  }
+  .lb-leather-slide img {
+    width:100%; height:auto; max-height:88vh; object-fit:contain;
+    display:block; border-radius:4px;
+    box-shadow:0 40px 120px rgba(0,0,0,.8);
+    animation:lbScaleIn .3s cubic-bezier(.25,.46,.45,.94);
+  }
+  .lb-leather-caption {
+    position:absolute; bottom:-28px; left:50%; transform:translateX(-50%);
+    font-size:12px; letter-spacing:.15em; color:rgba(255,255,255,.4);
+    white-space:nowrap;
+  }
+  .lb-nav-btn {
+    width:52px; height:52px; border-radius:50%;
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15);
+    color:#fff; font-size:26px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; transition:all .2s; margin:0 12px;
+  }
+  .lb-nav-btn:hover { background:rgba(200,170,114,.25); border-color:var(--accent-dim); }
+  .lb-close-btn {
+    position:fixed; top:28px; right:36px;
+    width:44px; height:44px; border-radius:50%;
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15);
+    color:#fff; font-size:20px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:all .2s; z-index:10001;
+  }
+  .lb-close-btn:hover { background:rgba(255,255,255,.18); transform:scale(1.1); }
+  .lb-dots {
+    position:fixed; bottom:32px; left:50%; transform:translateX(-50%);
+    display:flex; gap:8px;
+  }
+  .lb-dot {
+    width:8px; height:8px; border-radius:50%;
+    background:rgba(255,255,255,.25); cursor:pointer; border:1px solid rgba(255,255,255,.2);
+    transition:all .3s;
+  }
+  .lb-dot.active { background:var(--accent); border-color:var(--accent); }
+
   /* ─── RESPONSIVE ─── */
   @media (max-width:1024px) {
     .hero-content { grid-template-columns:1fr; gap:40px; }
@@ -699,6 +817,7 @@
       <p class="hero-copy">새로운 S-Class.<br>성공의 기준은 다시 한번 진화합니다.<br>압도적인 존재감과 미래를 향한 기술이 하나로.</p>
 
     </div>
+  </div><!-- /hero-content -->
 
   <div class="hero-scroll">
     <div class="hero-scroll-line"></div>
@@ -876,10 +995,39 @@
     <p class="section-desc fade-in">가죽부터 MANUFAKTUR 마이바흐 익스클루시브 나파 레더까지, 5가지 내장 구성을 제공합니다.</p>
 
     <div class="interior-grid fade-in">
-      <div class="int-card">
-        <div class="ph int-ph"><span class="ph-label">INTERIOR IMAGE</span></div>
+      <!-- LEATHER CARD with slider -->
+      <div class="int-card int-card-leather" style="cursor:default;">
+        <div class="int-slider" id="leatherSlider">
+          <div class="int-slider-track" id="leatherTrack">
+            <div class="int-slide" onclick="openLeatherLightbox(0)">
+              <img src="int_leather_black.jpg" alt="가죽 · 블랙">
+              <div class="int-slide-label">블랙</div>
+              <div class="zoom-hint">⊕ 전체화면</div>
+            </div>
+            <div class="int-slide" onclick="openLeatherLightbox(1)">
+              <img src="int_leather_beige.png" alt="가죽 · 베이지">
+              <div class="int-slide-label">베이지</div>
+              <div class="zoom-hint">⊕ 전체화면</div>
+            </div>
+            <div class="int-slide" onclick="openLeatherLightbox(2)">
+              <img src="int_leather_brown.png" alt="가죽 · 브라운">
+              <div class="int-slide-label">브라운</div>
+              <div class="zoom-hint">⊕ 전체화면</div>
+            </div>
+          </div>
+          <button class="slider-btn slider-prev" onclick="slideLeather(-1)">&#8249;</button>
+          <button class="slider-btn slider-next" onclick="slideLeather(1)">&#8250;</button>
+          <div class="slider-dots" id="leatherDots">
+            <span class="slider-dot active" onclick="goLeatherSlide(0)"></span>
+            <span class="slider-dot" onclick="goLeatherSlide(1)"></span>
+            <span class="slider-dot" onclick="goLeatherSlide(2)"></span>
+          </div>
+        </div>
         <div class="int-info">
-          <div class="int-name">가죽</div>
+          <div class="int-name" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            가죽
+            <span style="font-size:9px;letter-spacing:.12em;color:var(--accent);border:1px solid var(--accent-dim);padding:3px 9px;border-radius:20px;font-weight:400;">S350d · S450 SWB 기본적용</span>
+          </div>
           <div class="int-code">213A / 214A / 215A</div>
         </div>
       </div>
@@ -1338,8 +1486,60 @@
   }, 200);
 
 
-  // Lightbox
-  function openLightbox(src, caption) {
+  // ── LEATHER SLIDER ──
+  let leatherIdx = 0;
+  const leatherTotal = 3;
+  function updateLeatherSlider() {
+    document.getElementById('leatherTrack').style.transform = `translateX(-${leatherIdx * 100}%)`;
+    document.querySelectorAll('#leatherDots .slider-dot').forEach((d,i) => d.classList.toggle('active', i === leatherIdx));
+  }
+  function slideLeather(dir) {
+    leatherIdx = (leatherIdx + dir + leatherTotal) % leatherTotal;
+    updateLeatherSlider();
+  }
+  function goLeatherSlide(i) {
+    leatherIdx = i;
+    updateLeatherSlider();
+  }
+
+  // ── LEATHER LIGHTBOX ──
+  let lbLeatherIdx = 0;
+  const leatherImages = ['int_leather_black.jpg','int_leather_beige.png','int_leather_brown.png'];
+  const leatherLabels = ['가죽 · 블랙 (213A)','가죽 · 베이지 (214A)','가죽 · 브라운 (215A)'];
+  function updateLbLeather() {
+    document.getElementById('lbLeatherTrack').style.transform = `translateX(-${lbLeatherIdx * 100}%)`;
+    document.querySelectorAll('.lb-dot').forEach((d,i) => d.classList.toggle('active', i === lbLeatherIdx));
+  }
+  function openLeatherLightbox(startIdx) {
+    lbLeatherIdx = startIdx;
+    updateLbLeather();
+    document.getElementById('leatherLightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLeatherLightbox() {
+    document.getElementById('leatherLightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  function closeLeatherLightboxBg(e) {
+    if (e.target === document.getElementById('leatherLightbox')) closeLeatherLightbox();
+  }
+  function lbLeatherNav(dir) {
+    lbLeatherIdx = (lbLeatherIdx + dir + leatherTotal) % leatherTotal;
+    updateLbLeather();
+  }
+  function lbLeatherGo(i) {
+    lbLeatherIdx = i;
+    updateLbLeather();
+  }
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('leatherLightbox').classList.contains('active')) {
+      if (e.key === 'ArrowLeft') lbLeatherNav(-1);
+      if (e.key === 'ArrowRight') lbLeatherNav(1);
+      if (e.key === 'Escape') closeLeatherLightbox();
+    }
+  });
+
+src, caption) {
     const lb = document.getElementById('lightbox');
     lb.classList.remove('video-mode');
     document.getElementById('lightboxImg').src = src;
@@ -1377,6 +1577,36 @@
   });
 
 </script>
+
+<!-- LEATHER LIGHTBOX -->
+<div id="leatherLightbox" onclick="closeLeatherLightboxBg(event)">
+  <button class="lb-close-btn" onclick="closeLeatherLightbox()">✕</button>
+  <button class="lb-nav-btn" onclick="lbLeatherNav(-1)">&#8249;</button>
+  <div class="lb-leather-wrap">
+    <div class="lb-leather-track-outer">
+      <div class="lb-leather-track" id="lbLeatherTrack">
+        <div class="lb-leather-slide">
+          <img src="int_leather_black.jpg" alt="가죽 · 블랙">
+          <div class="lb-leather-caption">가죽 · 블랙 (213A)</div>
+        </div>
+        <div class="lb-leather-slide">
+          <img src="int_leather_beige.png" alt="가죽 · 베이지">
+          <div class="lb-leather-caption">가죽 · 베이지 (214A)</div>
+        </div>
+        <div class="lb-leather-slide">
+          <img src="int_leather_brown.png" alt="가죽 · 브라운">
+          <div class="lb-leather-caption">가죽 · 브라운 (215A)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="lb-nav-btn" onclick="lbLeatherNav(1)">&#8250;</button>
+  <div class="lb-dots">
+    <span class="lb-dot active" onclick="lbLeatherGo(0)"></span>
+    <span class="lb-dot" onclick="lbLeatherGo(1)"></span>
+    <span class="lb-dot" onclick="lbLeatherGo(2)"></span>
+  </div>
+</div>
 
 <!-- LIGHTBOX -->
 <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
