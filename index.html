@@ -352,7 +352,7 @@
   }
   .launch-limited { font-size:11px; color:var(--accent); padding:0 28px 24px; letter-spacing:.1em; }
   .launch-body { display:grid; grid-template-columns:1fr 1fr; }
-  .launch-main-img { aspect-ratio:4/3; }
+  .launch-main-img { aspect-ratio:4/3; min-height:320px; }
   .launch-spec-panel {
     padding:40px; display:flex; flex-direction:column; gap:24px;
     background:rgba(0,0,0,.2);
@@ -394,7 +394,7 @@
     opacity:0; transition:opacity .3s; pointer-events:none;
   }
   .launch-img-clickable:hover .launch-img-zoom-hint { opacity:1; }
-  .launch-main-img.launch-img-clickable { aspect-ratio:4/3; }
+  .launch-main-img.launch-img-clickable { aspect-ratio:4/3; min-height:320px; }
 
   /* ─── PRE-ORDER ─── */
   #preorder { background:var(--black); }
