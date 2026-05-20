@@ -380,6 +380,22 @@
   .launch-thumbs { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
   .launch-thumb { aspect-ratio:4/3; }
 
+  /* ─── LAUNCH IMAGE CLICKABLE ─── */
+  .launch-img-clickable {
+    position:relative; overflow:hidden; cursor:zoom-in;
+  }
+  .launch-img-clickable img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.25,.46,.45,.94); }
+  .launch-img-clickable:hover img { transform:scale(1.04); }
+  .launch-img-zoom-hint {
+    position:absolute; bottom:12px; right:12px;
+    background:rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.18);
+    border-radius:20px; padding:5px 12px;
+    font-size:10px; letter-spacing:.12em; color:rgba(255,255,255,.65);
+    opacity:0; transition:opacity .3s; pointer-events:none;
+  }
+  .launch-img-clickable:hover .launch-img-zoom-hint { opacity:1; }
+  .launch-main-img.launch-img-clickable { aspect-ratio:4/3; }
+
   /* ─── PRE-ORDER ─── */
   #preorder { background:var(--black); }
   .preorder-banner {
@@ -1392,7 +1408,10 @@
       <div class="launch-model-title">S 450 4M L AMG Line – AMG 라인 플러스 에디션</div>
       <div class="launch-limited">22316512-KR2 · 140대 한정</div>
       <div class="launch-body">
-        <div class="ph launch-main-img"><span class="ph-label">S-CLASS IMAGE</span></div>
+        <div class="launch-main-img launch-img-clickable" onclick="openLightbox('amg_exterior_side.png','S 450 4M L AMG Line – 측면')">
+          <img src="amg_exterior_side.png" alt="S 450 4M L AMG Line 측면" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.25,.46,.45,.94);">
+          <div class="launch-img-zoom-hint">클릭하여 확대</div>
+        </div>
         <div class="launch-spec-panel">
           <div>
             <div class="spec-group-title">Specification</div>
@@ -1417,10 +1436,22 @@
         </div>
       </div>
       <div class="launch-thumbs">
-        <div class="ph launch-thumb"><span class="ph-label">IMAGE</span></div>
-        <div class="ph launch-thumb"><span class="ph-label">IMAGE</span></div>
-        <div class="ph launch-thumb"><span class="ph-label">INTERIOR IMAGE</span></div>
-        <div class="ph launch-thumb"><span class="ph-label">DETAIL IMAGE</span></div>
+        <div class="launch-thumb launch-img-clickable" onclick="openLightbox('amg_exterior_side.png','S 450 4M L AMG Line – 측면')">
+          <img src="amg_exterior_side.png" alt="측면" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
+          <div class="launch-img-zoom-hint">확대</div>
+        </div>
+        <div class="launch-thumb launch-img-clickable" onclick="openLightbox('amg_exterior_front.png','S 450 4M L AMG Line – 정면')">
+          <img src="amg_exterior_front.png" alt="정면" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
+          <div class="launch-img-zoom-hint">확대</div>
+        </div>
+        <div class="launch-thumb launch-img-clickable" onclick="openLightbox('amg_interior_rear.png','S 450 4M L AMG Line – 인테리어 후석')">
+          <img src="amg_interior_rear.png" alt="인테리어 후석" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
+          <div class="launch-img-zoom-hint">확대</div>
+        </div>
+        <div class="launch-thumb launch-img-clickable" onclick="openLightbox('amg_interior_dash.png','S 450 4M L AMG Line – 대시보드')">
+          <img src="amg_interior_dash.png" alt="대시보드" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
+          <div class="launch-img-zoom-hint">확대</div>
+        </div>
       </div>
     </div>
 
