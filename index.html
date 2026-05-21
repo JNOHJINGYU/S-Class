@@ -6,6 +6,7 @@
 <title>The new S-Class — Mercedes-Benz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --black: #060608;
@@ -28,127 +29,374 @@
     -webkit-font-smoothing: antialiased;
     background-color: var(--black);
     color: var(--white);
-    font-family: sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
   }
 
-  /* 스파클링 블랙 에디션 스타일 커스텀 추가 */
-  .edition-card {
+  /* 글로벌 헤더/네비게이션 */
+  header {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    height: 70px;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+  }
+  .logo {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+  nav a {
+    color: var(--silver);
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 14px;
+    transition: color 0.3s;
+  }
+  nav a:hover { color: var(--accent); }
+
+  /* 메인 레이아웃 및 영웅 섹션 */
+  .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: radial-gradient(circle at center, var(--navy) 0%, var(--black) 100%);
+    padding: 20px;
+  }
+  .hero h1 {
+    font-size: 54px;
+    font-weight: 300;
+    letter-spacing: -1px;
+    margin-bottom: 15px;
+  }
+  .hero p {
+    font-size: 18px;
+    color: var(--silver);
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  /* 콘텐츠 컨테이너 */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+  }
+
+  /* 스파클링 블랙 에디션 전용 스타일 커스텀 추가 */
+  .edition-section {
     background: var(--card);
     border: 1px solid var(--card-border);
-    border-radius: 12px;
-    padding: 40px;
-    margin: 40px auto;
-    max-width: 1200px;
+    border-radius: 16px;
+    padding: 60px 40px;
+    margin: 40px 0;
     text-align: center;
   }
-  .edition-title {
-    font-size: 28px;
+  .edition-tag {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 10px;
-    font-weight: bold;
+    margin-bottom: 16px;
+    border: 1px solid var(--accent-dim);
+    padding: 4px 12px;
+    border-radius: 20px;
   }
-  .edition-subtitle {
+  .edition-title {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .edition-desc {
     font-size: 16px;
-    color: var(--silver);
-    margin-bottom: 30px;
+    color: var(--silver-dim);
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+    line-height: 1.6;
   }
-  .img-container {
+  
+  /* 이미지 컨테이너 및 호버 효과 */
+  .sparkling-img-container {
     width: 100%;
-    max-width: 900px;
+    max-width: 960px;
     margin: 0 auto;
     overflow: hidden;
     border-radius: 8px;
     cursor: pointer;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
   }
-  .img-container:hover {
-    transform: scale(1.02);
-    box-shadow: 0 25px 50px rgba(200,170,114,0.15);
+  .sparkling-img-container:hover {
+    transform: scale(1.015);
+    box-shadow: 0 40px 80px rgba(200,170,114,0.12);
   }
-  .img-container img {
+  .sparkling-img-container img {
     width: 100%;
     height: auto;
     display: block;
     object-fit: cover;
   }
 
-  /* 라이트박스 애니메이션 및 스타일 */
-  @keyframes lbFadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  /* 인테리어 / 나파 레더 섹션 (기존 스타일 보존) */
+  .leather-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 40px;
   }
-  .custom-lightbox {
+  .leather-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .leather-card:hover { transform: translateY(-5px); }
+  .leather-card img { width: 100%; height: 220px; object-fit: cover; display: block; }
+  .leather-info { padding: 24px; }
+  .leather-name { font-size: 18px; font-weight: 500; margin-bottom: 8px; }
+  .leather-desc { font-size: 14px; color: var(--silver-dim); }
+
+  /* 라이트박스 시스템 기본 구조 (기존 및 신규 공용) */
+  @keyframes lbFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .lb-modal {
     display: none;
     position: fixed;
     inset: 0;
     z-index: 10000;
-    background: rgba(0, 0, 0, 0.92);
+    background: rgba(4, 5, 7, 0.95);
     align-items: center;
     justify-content: center;
-    animation: lbFadeIn 0.2s ease;
+    animation: lbFadeIn 0.25s ease;
   }
-  .lightbox-img {
-    max-width: 90%;
-    max-height: 85vh;
-    object-fit: contain;
-    box-shadow: 0 0 30px rgba(0,0,0,0.8);
-    border-radius: 4px;
-  }
-  .lightbox-close {
+  .lb-close-btn {
     position: absolute;
     top: 30px;
     right: 40px;
     background: none;
     border: none;
-    color: #fff;
-    font-size: 35px;
+    color: var(--white);
+    font-size: 32px;
     cursor: pointer;
-    opacity: 0.7;
+    opacity: 0.6;
     transition: opacity 0.2s;
+    z-index: 10100;
   }
-  .lightbox-close:hover {
-    opacity: 1;
+  .lb-close-btn:hover { opacity: 1; }
+
+  /* 단일 이미지 전용 라이트박스 스타일 추가 */
+  .single-lb-content {
+    max-width: 90%;
+    max-height: 85vh;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .single-lb-content img {
+    display: block;
+    max-width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+  }
+
+  /* 기존 슬라이더용 라이트박스 스타일 보존 */
+  .lb-nav-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: none; border: none; color: white; font-size: 48px;
+    cursor: pointer; opacity: 0.5; transition: opacity 0.2s; z-index: 10100;
+  }
+  .lb-nav-btn:hover { opacity: 1; }
+  .lb-nav-btn.prev { left: 40px; }
+  .lb-nav-btn.next { right: 40px; }
+  .lb-leather-wrap { width: 80%; max-width: 1000px; position: relative; overflow: hidden; }
+  .lb-leather-track-outer { width: 100%; overflow: hidden; }
+  .lb-leather-track { display: flex; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+  .lb-leather-slide { min-width: 100%; text-align: center; box-sizing: border-box; padding: 0 10px; }
+  .lb-leather-slide img { max-width: 100%; max-height: 65vh; object-fit: contain; border-radius: 4px; }
+  .lb-leather-caption { margin-top: 20px; font-size: 16px; color: var(--silver); }
+  .lb-dots { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
+  .lb-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; }
+  .lb-dot.active { background: var(--accent); }
+
+  footer {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--silver-dim);
+    font-size: 13px;
+    border-top: 1px solid var(--card-border);
+    margin-top: 80px;
   }
 </style>
 </head>
 <body>
 
-<div class="edition-card">
-  <div class="edition-title">S 500 4MATIC Sparkling Black Edition</div>
-  <div class="edition-subtitle">특별한 깊이감을 선사하는 오디시안 블랙과 고품격 디테일의 조화</div>
-  
-  <div class="img-container" onclick="openSparklingLightbox()">
-    <img src="sparkling_black_side.jpg" alt="S 500 4MATIC Sparkling Black Edition 측면">
+<header>
+  <div class="logo">MERCEDES-BENZ</div>
+  <nav>
+    <a href="#hero">Overview</a>
+    <a href="#edition">Sparkling Black</a>
+    <a href="#interior">Interior</a>
+  </nav>
+</header>
+
+<section id="hero" class="hero">
+  <h1>The new S-Class</h1>
+  <p>최고의 장인정신과 혁신적인 디지털 기술이 결합되어 럭셔리 세단의 새로운 기준을 정의합니다.</p>
+</section>
+
+<div class="container">
+
+  <section id="edition" class="edition-section">
+    <div class="edition-tag">Special Limited Edition</div>
+    <div class="edition-title">S 500 4MATIC Sparkling Black Edition</div>
+    <div class="edition-desc">오디시안 블랙 외장 컬러의 깊이감 위에 밤하늘의 별처럼 빛나는 디테일을 추가하여 시대를 초월한 우아함을 완성했습니다.</div>
+    
+    <div class="sparkling-img-container" onclick="openSparklingModal()">
+      <img src="sparkling_black_side.jpg" alt="S 500 4MATIC Sparkling Black Edition 측면 외관">
+    </div>
+  </section>
+
+  <section id="interior" style="margin-top: 100px;">
+    <h2 style="font-size: 28px; font-weight: 400; margin-bottom: 12px; text-align: center;">MANUFAKTUR Interior Trim</h2>
+    <p style="text-align: center; color: var(--silver-dim); margin-bottom: 40px;">최고급 마이바흐 익스클루시브 가죽 트림을 직접 확인해 보세요.</p>
+    
+    <div class="leather-grid">
+      <div class="leather-card" onclick="openManufakturLightbox(0)">
+        <img src="manufaktur_beige.png" alt="베이지/골드">
+        <div class="leather-info">
+          <div class="leather-name">마이바흐 나파 · 베이지</div>
+          <div class="leather-desc">고급스러운 골드 자수 디테일 포함</div>
+        </div>
+      </div>
+      <div class="leather-card" onclick="openManufakturLightbox(1)">
+        <img src="manufaktur_navy.png" alt="네이비블루">
+        <div class="leather-info">
+          <div class="leather-name">마이바흐 나파 · 네이비</div>
+          <div class="leather-desc">정제되고 이성적인 분위기의 인테리어</div>
+        </div>
+      </div>
+      <div class="leather-card" onclick="openManufakturLightbox(2)">
+        <img src="manufaktur_tan.png" alt="탄브라운">
+        <div class="leather-info">
+          <div class="leather-name">마이바흐 나파 · 탄브라운</div>
+          <div class="leather-desc">전통 럭셔리 마차의 깊이를 담은 브라운</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div id="sparklingModal" class="lb-modal" onclick="closeSparklingModalBg(event)">
+  <button class="lb-close-btn" onclick="closeSparklingModal()">✕</button>
+  <div class="single-lb-content">
+    <img src="sparkling_black_side.jpg" alt="S 500 4MATIC Sparkling Black Edition 측면 확대 이미지">
   </div>
 </div>
 
-<div id="sparklingLightbox" class="custom-lightbox" onclick="closeSparklingLightboxBg(event)">
-  <button class="lightbox-close" onclick="closeSparklingLightbox()">✕</button>
-  <img src="sparkling_black_side.jpg" class="lightbox-img" alt="S 500 4MATIC Sparkling Black Edition 측면 확대">
+<div id="manufakturLightbox" class="lb-modal" onclick="closeManufakturLightboxBg(event)">
+  <button class="lb-close-btn" onclick="closeManufakturLightbox()">✕</button>
+  <button class="lb-nav-btn prev" onclick="lbManufakturNav(-1)">&#8249;</button>
+  <button class="lb-nav-btn next" onclick="lbManufakturNav(1)">&#8250;</button>
+  <div class="lb-leather-wrap">
+    <div class="lb-leather-track-outer">
+      <div class="lb-leather-track" id=\"lbManufakturTrack\">
+        <div class="lb-leather-slide">
+          <img src="manufaktur_beige.png" alt="MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 베이지/골드">
+          <div class="lb-leather-caption">MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 베이지 / 골드</div>
+        </div>
+        <div class="lb-leather-slide">
+          <img src="manufaktur_navy.png" alt="MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 네이비">
+          <div class="lb-leather-caption">MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 네이비 블루</div>
+        </div>
+        <div class="lb-leather-slide">
+          <img src="manufaktur_tan.png" alt="MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 탄브라운">
+          <div class="lb-leather-caption">MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 탄브라운</div>
+        </div>
+      </div>
+    </div>
+    <div class="lb-dots">
+      <span class="lb-dot" onclick="lbManufakturGo(0)"></span>
+      <span class="lb-dot" onclick="lbManufakturGo(1)"></span>
+      <span class="lb-dot" onclick="lbManufakturGo(2)"></span>
+    </div>
+  </div>
 </div>
 
+<footer>
+  <p>© 2026 Mercedes-Benz Korea. All Rights Reserved. 본 페이지는 포트폴리오 데모용으로 제작되었습니다.</p>
+</footer>
+
 <script>
-  // 라이트박스 열기
-  function openSparklingLightbox() {
-    const lb = document.getElementById('sparklingLightbox');
-    lb.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // 뒤쪽 본문 스크롤 방지
+  /* 1. 스파클링 블랙 단일 이미지 라이트박스 제어 스크립트 */
+  function openSparklingModal() {
+    document.getElementById('sparklingModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
   }
-
-  // 라이트박스 닫기 (✕ 버튼 클릭 시)
-  function closeSparklingLightbox() {
-    const lb = document.getElementById('sparklingLightbox');
-    lb.style.display = 'none';
-    document.body.style.overflow = ''; // 스크롤 복원
+  function closeSparklingModal() {
+    document.getElementById('sparklingModal').style.display = 'none';
+    document.body.style.overflow = '';
   }
-
-  // 라이트박스 바깥 검은 배경 클릭 시 닫기
-  function closeSparklingLightboxBg(event) {
-    // 클릭한 대상이 이미지(lightbox-img)가 아니라 배경일 때만 닫힘
-    if (!event.target.classList.contains('lightbox-img')) {
-      closeSparklingLightbox();
+  function closeSparklingModalBg(e) {
+    if (e.target.classList.contains('lb-modal')) {
+      closeSparklingModal();
     }
+  }
+
+  /* 2. 기존 마이바흐 가죽 슬라이더 라이트박스 스크립트 보존 및 연동 */
+  let currentIdx = 0;
+  const totalSlides = 3;
+
+  function openManufakturLightbox(index) {
+    currentIdx = index;
+    document.getElementById('manufakturLightbox').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    updateSlider();
+  }
+  function closeManufakturLightbox() {
+    document.getElementById('manufakturLightbox').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function closeManufakturLightboxBg(e) {
+    if (e.target.classList.contains('lb-modal')) {
+      closeManufakturLightbox();
+    }
+  }
+  function lbManufakturNav(dir) {
+    currentIdx += dir;
+    if (currentIdx < 0) currentIdx = totalSlides - 1;
+    if (currentIdx >= totalSlides) currentIdx = 0;
+    updateSlider();
+  }
+  function lbManufakturGo(index) {
+    currentIdx = index;
+    updateSlider();
+  }
+  function updateSlider() {
+    const track = document.getElementById('lbManufakturTrack');
+    if(track) {
+      track.style.transform = `translateX(-${currentIdx * 100}%)`;
+    }
+    const dots = document.querySelectorAll('#manufakturLightbox .lb-dot');
+    dots.forEach((dot, idx) => {
+      if (idx === currentIdx) dot.classList.add('active');
+      else dot.classList.remove('active');
+    });
   }
 </script>
 
