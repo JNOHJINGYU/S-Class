@@ -848,6 +848,39 @@
   .lightbox-img { max-width: 95vw; max-height: 80vh; }
   .lightbox-close { top: 16px; right: 16px; }
 }
+
+
+@media (max-width: 768px) {
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .car-image img,
+  .vehicle-image img,
+  .model-image img,
+  .product-card img,
+  .launch-card img,
+  .card img {
+    width: 100%;
+    height: auto !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    display: block;
+  }
+
+  .car-image,
+  .vehicle-image,
+  .model-image,
+  .image-wrapper,
+  .product-card,
+  .launch-card,
+  .card {
+    overflow: hidden;
+  }
+}
+
+
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
