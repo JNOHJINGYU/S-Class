@@ -796,6 +796,58 @@
   }
   .ext-ph.real-img:hover .zoom-hint { opacity: 1; }
 
+
+/* Image zoom */
+.img-zoom-wrap { overflow: hidden; cursor: pointer; }
+
+.launch-img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.45s ease;
+}
+
+.img-zoom-wrap:hover .launch-img {
+  transform: scale(1.06);
+  filter: brightness(1.08);
+}
+
+/* Lightbox */
+.lightbox-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.92);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+  backdrop-filter: blur(6px);
+}
+.lightbox-overlay.is-open { opacity: 1; visibility: visible; }
+
+.lightbox-content {
+  transform: scale(0.88);
+  transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.lightbox-overlay.is-open .lightbox-content { transform: scale(1); }
+
+.lightbox-img {
+  max-width: 90vw; max-height: 88vh;
+  object-fit: contain;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.8);
+}
+
+.lightbox-close {
+  position: fixed; top: 24px; right: 28px;
+  background: none; border: 1px solid rgba(255,255,255,0.25);
+  color: #fff; font-size: 18px;
+  width: 40px; height: 40px; border-radius: 50%;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s ease;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.12); }
+
+@media (max-width: 768px) {
+  .lightbox-img { max-width: 95vw; max-height: 80vh; }
+  .lightbox-close { top: 16px; right: 16px; }
+}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1461,7 +1513,14 @@
       <div class="launch-model-title">S 500 4M L – MANUFAKTUR 스파클링 블랙 에디션</div>
       <div class="launch-limited">22316412-KR1 · 140대 한정</div>
       <div class="launch-body">
-        <div class="ph launch-main-img"><span class="ph-label">S-CLASS IMAGE</span></div>
+        <div class="launch-main-img img-zoom-wrap">
+  <img
+    src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_side.png?raw=true"
+    alt="S 500 4MATIC L 메인 이미지"
+    class="launch-img lightbox-trigger"
+    loading="lazy"
+  />
+</div>
         <div class="launch-spec-panel">
           <div>
             <div class="spec-group-title">Specification</div>
@@ -1486,10 +1545,18 @@
         </div>
       </div>
       <div class="launch-thumbs">
-        <div class="ph launch-thumb"><span class="ph-label">IMAGE</span></div>
-        <div class="ph launch-thumb"><span class="ph-label">IMAGE</span></div>
-        <div class="ph launch-thumb"><span class="ph-label">INTERIOR IMAGE</span></div>
-        <div class="ph launch-thumb"><span class="ph-label">DETAIL IMAGE</span></div>
+        <div class="launch-thumb img-zoom-wrap">
+  <img src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_side.png?raw=true" alt="외관 이미지 1" class="launch-img lightbox-trigger" loading="lazy" />
+</div>
+<div class="launch-thumb img-zoom-wrap">
+  <img src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_front.png?raw=true" alt="외관 이미지 2" class="launch-img lightbox-trigger" loading="lazy" />
+</div>
+<div class="launch-thumb img-zoom-wrap">
+  <img src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_interior_rear.png?raw=true" alt="인테리어 이미지" class="launch-img lightbox-trigger" loading="lazy" />
+</div>
+<div class="launch-thumb img-zoom-wrap">
+  <img src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_interior_driver.png?raw=true" alt="디테일 이미지" class="launch-img lightbox-trigger" loading="lazy" />
+</div>
       </div>
     </div>
   </div>
@@ -2121,5 +2188,52 @@
   </div>
 </div>
 
+
+  <div id="lightbox-overlay" class="lightbox-overlay">
+    <button class="lightbox-close" id="lightbox-close">&#x2715;</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="" class="lightbox-img" />
+    </div>
+  </div>
+<div id="lightbox-overlay" ...> ... </div>  ← STEP 4에서 추가한 부분
+
+  <!-- JS: lightbox 바로 아래에 추가 -->
+  <script>
+  (function () {
+    const overlay  = document.getElementById('lightbox-overlay');
+    const lightImg = document.getElementById('lightbox-img');
+    const closeBtn = document.getElementById('lightbox-close');
+
+    function openLightbox(src, alt) {
+      lightImg.src = src;
+      lightImg.alt = alt || '';
+      overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+      setTimeout(() => { lightImg.src = ''; }, 350);
+    }
+
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('.lightbox-trigger')) {
+        openLightbox(e.target.src, e.target.alt);
+      }
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeLightbox();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  })();
+  </script>
+
+</body>
+</body>
 </body>
 </html>
