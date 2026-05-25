@@ -652,7 +652,23 @@
     .container { padding:0 20px; }
     section { padding:80px 0; }
     .exterior-grid { grid-template-columns:1fr; }
-    .interior-grid { grid-template-columns:1fr 1fr; }
+    .interior-grid {
+      grid-template-columns: 1fr !important;
+      gap: 24px !important;
+    }
+    .int-card,
+    .int-card-leather {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    .int-slider {
+      aspect-ratio: 16/9 !important;
+    }
+    .int-slide img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+    }
     .lineup-cards { grid-template-columns:1fr; }
     .launch-body { grid-template-columns:1fr; }
     .launch-thumbs { grid-template-columns:repeat(2,1fr); }
