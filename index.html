@@ -57,38 +57,57 @@
     position: fixed; top:0; left:0; right:0; z-index:1000;
     display:flex; align-items:center; justify-content:space-between;
     padding: 0 48px;
-    height: 64px;
+    height: 68px;
     background: rgba(6,6,8,0.92);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(255,255,255,0.05);
     transition: all .3s ease;
   }
-  nav.scrolled { height:52px; background: rgba(6,6,8,0.98); }
+  nav.scrolled { height:56px; background: rgba(6,6,8,0.98); }
   .nav-logo {
     font-family:'Pretendard', 'Noto Sans KR', sans-serif, 'Noto Serif KR', sans-serif;
     font-weight:900;
-    font-size:13px;
+    font-size:15px;
     letter-spacing:.35em;
     color: var(--white);
     text-transform:uppercase;
+    display:flex; align-items:center;
   }
   .nav-logo span { color: rgba(255,255,255,0.6); }
   .nav-links {
-    display:flex; gap:36px; list-style:none;
+    display:flex; gap:32px; list-style:none; align-items:center;
   }
   .nav-links a {
-    font-size:11px; letter-spacing:.2em; color:rgba(255,255,255,0.75);
+    font-size:13px; letter-spacing:.15em; color:rgba(255,255,255,0.78);
     text-decoration:none; text-transform:uppercase;
-    transition: color .3s;
+    transition: color .3s; display:flex; align-items:center;
   }
   .nav-links a:hover { color: var(--white); }
   .nav-cta {
-    font-size:12px; letter-spacing:.12em; text-transform:uppercase;
-    padding:9px 22px; border:1px solid rgba(255,255,255,0.3);
-    color: var(--white); background:transparent; cursor:pointer;
-    transition: all .3s; font-family:'Pretendard', 'Noto Sans KR', sans-serif,'Noto Sans KR',sans-serif; font-weight:300;
+    display:inline-flex; align-items:center; gap:7px;
+    font-size:13px; letter-spacing:.08em;
+    padding:10px 22px; border-radius:6px;
+    background: linear-gradient(135deg, #c8a84b 0%, #e8c86a 50%, #c8a84b 100%);
+    color: #0a0a0c; font-weight:700;
+    cursor:pointer; text-decoration:none;
+    font-family:'Pretendard', 'Noto Sans KR', sans-serif; 
+    transition: all .25s cubic-bezier(.25,.46,.45,.94);
+    box-shadow: 0 2px 16px rgba(200,168,75,0.30), 0 0 0 1px rgba(255,216,107,0.18);
+    white-space:nowrap; min-height:40px;
+    border: 1px solid rgba(255,216,107,0.35);
+    position:relative; overflow:hidden;
   }
-  .nav-cta:hover { background: var(--white); color: var(--black); border-color:var(--white); }
+  .nav-cta::before {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+    border-radius:6px; pointer-events:none;
+  }
+  .nav-cta:hover {
+    background: linear-gradient(135deg, #ddb94f 0%, #f5d87a 50%, #ddb94f 100%);
+    box-shadow: 0 4px 24px rgba(200,168,75,0.50), 0 0 0 1px rgba(255,216,107,0.35);
+    transform: translateY(-1px);
+    color: #060608;
+  }
 
   /* ─── PLACEHOLDER ─── */
   .ph {
@@ -303,6 +322,7 @@
   .int-card {
     background:var(--card); border:1px solid var(--card-border); border-radius:8px;
     overflow:hidden; transition:all .4s; cursor:default;
+    position: relative;
   }
   .int-card:hover { border-color:rgba(255,216,107,0.25); transform:translateY(-4px); box-shadow:0 24px 60px rgba(0,0,0,.5); }
   .int-ph { aspect-ratio:4/3; }
@@ -540,11 +560,13 @@
   .int-slide {
     min-width:100%; height:100%; position:relative;
     cursor:zoom-in; overflow:hidden; flex-shrink:0;
+    pointer-events: all;
   }
   .int-slide img {
     width:100%; height:100%; object-fit:cover;
     display:block;
     transition:transform .5s cubic-bezier(.25,.46,.45,.94);
+    pointer-events: none;
   }
   .int-slide:hover img { transform:scale(1.04); }
   .int-slide-label {
@@ -587,7 +609,7 @@
 
   /* ─── LEATHER LIGHTBOX ─── */
   #leatherLightbox, #nappaLightbox, #exclNappaLightbox {
-    display:none; position:fixed; inset:0; z-index:99999;
+    display:none; position:fixed; inset:0; z-index:2147483647;
     background:rgba(0,0,0,.96);
     align-items:center; justify-content:center;
     animation:lbFadeIn .2s ease;
@@ -630,12 +652,12 @@
     background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15);
     color:#fff; font-size:20px; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
-    transition:all .2s; z-index:100001;
+    transition:all .2s; z-index:2147483647;
   }
   .lb-close-btn:hover { background:rgba(255,255,255,.18); transform:scale(1.1); }
   .lb-dots {
     position:fixed; bottom:32px; left:50%; transform:translateX(-50%);
-    display:flex; gap:8px; z-index:100001;
+    display:flex; gap:8px; z-index:2147483647;
   }
   .lb-dot {
     width:8px; height:8px; border-radius:50%;
@@ -656,7 +678,9 @@
     .cta-cards { grid-template-columns:1fr; }
   }
   @media (max-width:768px) {
-    nav { padding:0 20px; }
+    nav { padding:0 20px; height:60px; }
+    .nav-logo { font-size:14px; letter-spacing:.2em; }
+    .nav-cta { font-size:13px; padding:9px 16px; min-height:38px; }
     .nav-links { display:none; }
     .container { padding:0 24px; }
     section { padding:72px 0; }
@@ -717,7 +741,7 @@
 
   /* ─── LIGHTBOX ─── */
   .lightbox-overlay {
-    display:none; position:fixed; inset:0; z-index:99999;
+    display:none; position:fixed; inset:0; z-index:2147483647;
     background:rgba(0,0,0,0.95);
     align-items:flex-start; justify-content:center;
     cursor:zoom-out;
@@ -1009,7 +1033,7 @@
     <li><a href="#launch">런치 에디션</a></li>
     <li><a href="#preorder">사전계약</a></li>
   </ul>
-  <a href="tel:01072997404" class="nav-cta" style="text-decoration:none;">전화상담</a>
+  <a href="tel:01072997404" class="nav-cta">📞 전화상담</a>
 </nav>
 
 <!-- HERO -->
@@ -1925,7 +1949,7 @@
 </div>
 
 <!-- MAYBACH NAPPA LIGHTBOX -->
-<div id="maybachNappaLightbox" onclick="closeMaybachNappaLightboxBg(event)" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.96);align-items:center;justify-content:center;animation:lbFadeIn .2s ease;">
+<div id="maybachNappaLightbox" onclick="closeMaybachNappaLightboxBg(event)" style="display:none;">
   <button class="lb-close-btn" onclick="closeMaybachNappaLightbox()">✕</button>
   <button class="lb-nav-btn" onclick="lbMaybachNappaNav(-1)">&#8249;</button>
   <div class="lb-leather-wrap">
@@ -1960,7 +1984,7 @@
 </div>
 
 <!-- MANUFAKTUR MAYBACH EXCL NAPPA LIGHTBOX -->
-<div id="manufakturLightbox" onclick="closeManufakturLightboxBg(event)" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.96);align-items:center;justify-content:center;animation:lbFadeIn .2s ease;">
+<div id="manufakturLightbox" onclick="closeManufakturLightboxBg(event)" style="display:none;">
   <button class="lb-close-btn" onclick="closeManufakturLightbox()">✕</button>
   <button class="lb-nav-btn" onclick="lbManufakturNav(-1)">&#8249;</button>
   <div class="lb-leather-wrap">
@@ -2039,11 +2063,15 @@
   function openNappaLightbox(startIdx) {
     lbNappaIdx = startIdx;
     updateLbNappa();
-    document.getElementById('nappaLightbox').classList.add('active');
+    const lb = document.getElementById('nappaLightbox');
+    lb.style.cssText = 'display:flex !important; position:fixed; inset:0; z-index:2147483647; background:rgba(0,0,0,.96); align-items:center; justify-content:center;';
+    lb.classList.add('active');
     lockBodyScroll();
   }
   function closeNappaLightbox() {
-    document.getElementById('nappaLightbox').classList.remove('active');
+    const lb = document.getElementById('nappaLightbox');
+    lb.style.cssText = 'display:none;';
+    lb.classList.remove('active');
     unlockBodyScroll();
   }
   function closeNappaLightboxBg(e) {
@@ -2089,11 +2117,15 @@
   function openExclNappaLightbox(startIdx) {
     lbExclNappaIdx = startIdx;
     updateLbExclNappa();
-    document.getElementById('exclNappaLightbox').classList.add('active');
+    const lb = document.getElementById('exclNappaLightbox');
+    lb.style.cssText = 'display:flex !important; position:fixed; inset:0; z-index:2147483647; background:rgba(0,0,0,.96); align-items:center; justify-content:center;';
+    lb.classList.add('active');
     lockBodyScroll();
   }
   function closeExclNappaLightbox() {
-    document.getElementById('exclNappaLightbox').classList.remove('active');
+    const lb = document.getElementById('exclNappaLightbox');
+    lb.style.cssText = 'display:none;';
+    lb.classList.remove('active');
     unlockBodyScroll();
   }
   function closeExclNappaLightboxBg(e) {
@@ -2136,16 +2168,20 @@
   const leatherLabels = ['가죽 · 블랙 (213A)','가죽 · 베이지 (214A)','가죽 · 브라운 (215A)'];
   function updateLbLeather() {
     document.getElementById('lbLeatherTrack').style.transform = `translateX(-${lbLeatherIdx * 100}%)`;
-    document.querySelectorAll('.lb-dot').forEach((d,i) => d.classList.toggle('active', i === lbLeatherIdx));
+    document.querySelectorAll('#leatherLightbox .lb-dot').forEach((d,i) => d.classList.toggle('active', i === lbLeatherIdx));
   }
   function openLeatherLightbox(startIdx) {
     lbLeatherIdx = startIdx;
     updateLbLeather();
-    document.getElementById('leatherLightbox').classList.add('active');
+    const lb = document.getElementById('leatherLightbox');
+    lb.style.cssText = 'display:flex !important; position:fixed; inset:0; z-index:2147483647; background:rgba(0,0,0,.96); align-items:center; justify-content:center;';
+    lb.classList.add('active');
     lockBodyScroll();
   }
   function closeLeatherLightbox() {
-    document.getElementById('leatherLightbox').classList.remove('active');
+    const lb = document.getElementById('leatherLightbox');
+    lb.style.cssText = 'display:none;';
+    lb.classList.remove('active');
     unlockBodyScroll();
   }
   function closeLeatherLightboxBg(e) {
@@ -2192,11 +2228,12 @@
     lbMaybachNappaIdx = startIdx;
     updateLbMaybachNappa();
     const lb = document.getElementById('maybachNappaLightbox');
-    lb.style.display = 'flex';
+    lb.style.cssText = 'display:flex !important; position:fixed; inset:0; z-index:2147483647; background:rgba(0,0,0,.96); align-items:center; justify-content:center;';
     lockBodyScroll();
   }
   function closeMaybachNappaLightbox() {
-    document.getElementById('maybachNappaLightbox').style.display = 'none';
+    const lb = document.getElementById('maybachNappaLightbox');
+    lb.style.cssText = 'display:none;';
     unlockBodyScroll();
   }
   function closeMaybachNappaLightboxBg(e) {
@@ -2243,11 +2280,12 @@
     lbManufakturIdx = startIdx;
     updateLbManufaktur();
     const lb = document.getElementById('manufakturLightbox');
-    lb.style.display = 'flex';
+    lb.style.cssText = 'display:flex !important; position:fixed; inset:0; z-index:2147483647; background:rgba(0,0,0,.96); align-items:center; justify-content:center;';
     lockBodyScroll();
   }
   function closeManufakturLightbox() {
-    document.getElementById('manufakturLightbox').style.display = 'none';
+    const lb = document.getElementById('manufakturLightbox');
+    lb.style.cssText = 'display:none;';
     unlockBodyScroll();
   }
   function closeManufakturLightboxBg(e) {
@@ -2269,21 +2307,30 @@
   });
 
   // Lightbox
-  // ── SCROLL LOCK (iOS-safe) ──
+  // ── SCROLL LOCK (iOS-safe, fixed-children-safe) ──
   let _scrollY = 0;
+  let _scrollLockCount = 0;
   function lockBodyScroll() {
-    _scrollY = window.scrollY;
-    document.body.style.position = 'fixed';
-    document.body.style.top = '-' + _scrollY + 'px';
-    document.body.style.width = '100%';
-    document.body.style.overflowY = 'scroll';
+    if (_scrollLockCount === 0) {
+      _scrollY = window.scrollY;
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = '-' + _scrollY + 'px';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+    }
+    _scrollLockCount++;
   }
   function unlockBodyScroll() {
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    document.body.style.overflowY = '';
-    window.scrollTo(0, _scrollY);
+    _scrollLockCount = Math.max(0, _scrollLockCount - 1);
+    if (_scrollLockCount === 0) {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      window.scrollTo(0, _scrollY);
+    }
   }
 
   function openLightbox(src, caption) {
@@ -2292,6 +2339,7 @@
     document.getElementById('lightboxImg').src = src;
     document.getElementById('lightboxCaption').textContent = caption || '';
     lb.style.display = 'flex';
+    lb.style.zIndex = '2147483647';
     lb.classList.add('active');
     lockBodyScroll();
   }
@@ -2304,6 +2352,7 @@
     vid.play();
     document.getElementById('lightboxCaption').textContent = caption || '';
     lb.style.display = 'flex';
+    lb.style.zIndex = '2147483647';
     lb.classList.add('active');
     lockBodyScroll();
   }
