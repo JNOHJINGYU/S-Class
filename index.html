@@ -73,7 +73,9 @@
     text-transform:uppercase;
     display:flex; align-items:center;
   }
-  .nav-logo span { color: rgba(255,255,255,0.6); }
+  .nav-logo span { 
+  color: #ffffff; 
+}
   .nav-links {
     display:flex; gap:32px; list-style:none; align-items:center;
   }
@@ -734,47 +736,100 @@
 
   /* ─── LIGHTBOX ─── */
   .lightbox-overlay {
-    display:none; position:fixed; inset:0; z-index:2147483647;
-    background:rgba(0,0,0,0.95);
-    align-items:flex-start; justify-content:center;
-    cursor:zoom-out;
-    overflow-y:auto;
-    overflow-x:hidden;
-    padding: 80px 0 60px;
-    -webkit-overflow-scrolling: touch;
+    display: none;
+    position: fixed; inset: 0; z-index: 2147483647;
+    background: rgba(0,0,0,0.96);
+    flex-direction: column;
+    align-items: center; justify-content: center;
+    cursor: zoom-out;
+    padding: 60px 16px 70px;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease;
   }
-  .lightbox-overlay.active { display:flex; }
+  .lightbox-overlay.lb-visible { display: flex; }
+  .lightbox-overlay.active { opacity: 1; }
   @keyframes lbFadeIn { from{opacity:0} to{opacity:1} }
+  @keyframes lbScaleIn { from{transform:scale(.92);opacity:0} to{transform:scale(1);opacity:1} }
+
   .lightbox-img-wrap {
-    position:relative; width:90vw; max-width:1200px;
-    display:flex; align-items:flex-start; justify-content:center;
-    margin:0 auto; animation: lbFadeIn .25s ease;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    max-width: 92vw; max-height: 78vh;
+    cursor: default;
   }
   .lightbox-overlay img {
-    max-width:90vw;
-    max-height:none;
-    width:auto;
-    height:auto;
-    object-fit:contain; border-radius:4px;
+    width: auto !important;
+    height: auto !important;
+    max-width: 92vw !important;
+    max-height: 78vh !important;
+    object-fit: contain !important;
+    border-radius: 4px;
     box-shadow: 0 40px 120px rgba(0,0,0,.8);
     animation: lbScaleIn .3s cubic-bezier(.25,.46,.45,.94);
-    cursor:default;
-    display:block;
+    cursor: default;
+    display: block !important;
+    margin: auto !important;
   }
-  @keyframes lbScaleIn { from{transform:scale(.92);opacity:0} to{transform:scale(1);opacity:1} }
   .lightbox-close {
-    position:fixed; top:28px; right:36px;
-    width:44px; height:44px; border-radius:50%;
-    background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15);
-    color:#fff; font-size:20px; cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    transition:all .2s; z-index:100000;
+    position: fixed; top: 20px; right: 24px;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
+    color: #fff; font-size: 20px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s; z-index: 10;
   }
-  .lightbox-close:hover { background:rgba(255,255,255,0.18); transform:scale(1.1); }
+  .lightbox-close:hover { background: rgba(255,255,255,0.18); transform: scale(1.1); }
   .lightbox-caption {
-    position:fixed; bottom:32px; left:50%; transform:translateX(-50%);
-    font-size:13px; letter-spacing:.15em; color:rgba(255,255,255,.55);
-    text-transform:uppercase; white-space:nowrap; z-index:100000;
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    font-size: 13px; letter-spacing: .15em; color: rgba(255,255,255,.55);
+    text-transform: uppercase; white-space: nowrap; z-index: 10;
+    pointer-events: none;
+  }
+
+  /* Gallery nav buttons */
+  .lightbox-gallery-prev,
+  .lightbox-gallery-next {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
+    color: #fff; font-size: 28px; cursor: pointer;
+    display: none; align-items: center; justify-content: center;
+    transition: all .2s; z-index: 10; line-height: 1;
+  }
+  .lightbox-gallery-prev { left: 20px; }
+  .lightbox-gallery-next { right: 20px; }
+  .lightbox-gallery-prev:hover,
+  .lightbox-gallery-next:hover { background: rgba(200,170,114,.28); border-color: var(--accent-dim); }
+
+  /* Gallery dots */
+  .lightbox-gallery-dots {
+    position: fixed; bottom: 48px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 10;
+  }
+  .lb-gallery-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,.25); cursor: pointer;
+    border: 1px solid rgba(255,255,255,.2); transition: all .3s;
+  }
+  .lb-gallery-dot.active { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+
+  /* show nav when in gallery mode */
+  .lightbox-overlay.gallery-mode .lightbox-gallery-prev,
+  .lightbox-overlay.gallery-mode .lightbox-gallery-next { display: flex; }
+
+  /* Mobile lightbox override — must win over all general img rules */
+  @media (max-width: 768px) {
+    .lightbox-overlay img {
+      width: auto !important;
+      height: auto !important;
+      max-width: 92vw !important;
+      max-height: 78vh !important;
+      object-fit: contain !important;
+      display: block !important;
+    }
+    .lightbox-gallery-prev { left: 8px; width: 40px; height: 40px; font-size: 22px; }
+    .lightbox-gallery-next { right: 8px; width: 40px; height: 40px; font-size: 22px; }
   }
 
   /* ─── EXTERIOR REAL IMAGE ─── */
@@ -920,6 +975,17 @@
     display: block;
   }
 
+  /* lightbox 이미지는 위 규칙 제외 — 반드시 독립 적용 */
+  .lightbox-overlay img,
+  .lightbox-img-wrap img {
+    width: auto !important;
+    height: auto !important;
+    max-width: 92vw !important;
+    max-height: 78vh !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+
   .car-image,
   .vehicle-image,
   .model-image,
@@ -1011,13 +1077,71 @@
   @media (max-width:768px) {
     .lineup-price-amount { font-size: 18px; }
   }
+
+ /* PC에서는 기존 로고 한 줄 */
+.logo-mobile {
+  display: none;
+}
+
+/* 전화상담 버튼 흰색 */
+.nav-cta {
+  background: white !important;
+  color: black !important;
+  border: 1px solid rgba(255,255,255,0.35) !important;
+  box-shadow: none !important;
+}
+
+/* 금색 효과 제거 */
+.nav-cta::before {
+  display: none !important;
+}
+
+.nav-cta:hover {
+  background: #f2f2f2 !important;
+  color: black !important;
+  box-shadow: none !important;
+}
+
+/* 모바일에서만 로고 두 줄 */
+@media (max-width: 768px) {
+  .logo-pc {
+    display: none;
+  }
+
+  .logo-mobile {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .logo-mobile span:first-child {
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: .18em;
+    color: white;
+  }
+
+  .logo-mobile span:last-child {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .38em;
+    color: rgba(255,255,255,0.55);
+    margin-top: 2px;
+  }
+}   
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav id="mainNav">
-  <div class="nav-logo">Mercedes-Benz <span>S-Class</span></div>
+  <div class="nav-logo">
+  <span class="logo-pc">Mercedes-Benz <span>S-Class</span></span>
+  <span class="logo-mobile">
+    <span>MERCEDES-BENZ</span>
+    <span>S-CLASS</span>
+  </span>
+</div>
   <ul class="nav-links">
     <li><a href="#facelift">하이라이트</a></li>
     <li><a href="#exterior">외관</a></li>
@@ -1186,17 +1310,17 @@
       <div class="int-card int-card-leather" style="cursor:default;">
         <div class="int-slider" id="leatherSlider">
           <div class="int-slider-track" id="leatherTrack">
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/int_leather_black.jpg?raw=true" alt="가죽 · 블랙">
               <div class="int-slide-label">블랙</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/int_leather_beige.png?raw=true" alt="가죽 · 베이지">
               <div class="int-slide-label">베이지</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/int_leather_brown.png?raw=true" alt="가죽 · 브라운">
               <div class="int-slide-label">브라운</div>
               <div class="zoom-hint">⊕ 전체화면</div>
@@ -1223,17 +1347,17 @@
       <div class="int-card int-card-leather" style="cursor:default;">
         <div class="int-slider" id="nappaSlider">
           <div class="int-slider-track" id="nappaTrack">
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/int_nappa_brown.png?raw=true" alt="나파 가죽 · 브라운">
               <div class="int-slide-label">브라운</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/int_nappa_beige.png?raw=true" alt="나파 가죽 · 베이지">
               <div class="int-slide-label">베이지</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/int_nappa_black.png?raw=true" alt="나파 가죽 · 블랙">
               <div class="int-slide-label">블랙</div>
               <div class="zoom-hint">⊕ 전체화면</div>
@@ -1259,17 +1383,17 @@
       <div class="int-card int-card-leather" style="cursor:default;">
         <div class="int-slider" id="exclNappaSlider">
           <div class="int-slider-track" id="exclNappaTrack">
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/int_excl_nappa_beige.png?raw=true" alt="익스클루시브 나파 가죽 · 베이지">
               <div class="int-slide-label">베이지</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/int_excl_nappa_black.png?raw=true" alt="익스클루시브 나파 가죽 · 블랙">
               <div class="int-slide-label">블랙</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/int_excl_nappa_brown.png?raw=true" alt="익스클루시브 나파 가죽 · 브라운">
               <div class="int-slide-label">브라운</div>
               <div class="zoom-hint">⊕ 전체화면</div>
@@ -1295,22 +1419,22 @@
       <div class="int-card int-card-leather" style="cursor:default;">
         <div class="int-slider" id="maybachNappaSlider">
           <div class="int-slider-track" id="maybachNappaTrack">
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/Maybach_nappa_white.png?raw=true" alt="마이바흐 익스클루시브 나파 레더 · 화이트">
               <div class="int-slide-label">화이트</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/Maybach_nappa_black.png?raw=true" alt="마이바흐 익스클루시브 나파 레더 · 블랙">
               <div class="int-slide-label">블랙</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/Maybach_nappa_brown.png?raw=true" alt="마이바흐 익스클루시브 나파 레더 · 브라운">
               <div class="int-slide-label">브라운</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/Maybach_nappa_beige.png?raw=true" alt="마이바흐 익스클루시브 나파 레더 · 베이지">
               <div class="int-slide-label">베이지</div>
               <div class="zoom-hint">⊕ 전체화면</div>
@@ -1337,12 +1461,12 @@
       <div class="int-card int-card-leather int-card-last" style="cursor:default;">
         <div class="int-slider" id="manufakturSlider">
           <div class="int-slider-track" id="manufakturTrack">
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/manufaktur_beige.png?raw=true" alt="MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 베이지">
               <div class="int-slide-label">베이지 / 골드</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
-            <div class="int-slide" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
+            <div class="int-slide">
               <img src="https://github.com/JNOHJINGYU/images/blob/main/manufaktur_navy.png?raw=true" alt="MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 네이비">
               <div class="int-slide-label">네이비 블루</div>
               <div class="zoom-hint">⊕ 전체화면</div>
@@ -1615,7 +1739,7 @@
       <div class="launch-model-title">S 450 4M L AMG Line – AMG 라인 플러스 에디션</div>
       <div class="launch-limited">22316512-KR2 · 140대 한정</div>
       <div class="launch-body">
-        <div class="launch-main-img launch-img-clickable" onclick="openLightbox('https://raw.githubusercontent.com/JNOHJINGYU/S-Class/main/JNOHJINGYU/images/image_02.png','S 450 4M L AMG Line – 측면')">
+        <div class="launch-main-img launch-img-clickable" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
           <img src="https://github.com/JNOHJINGYU/images/blob/main/amg_white_side.png?raw=true" alt="S 450 4M L AMG Line 측면" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.25,.46,.45,.94);">
           <div class="launch-img-zoom-hint">클릭하여 확대</div>
         </div>
@@ -1643,19 +1767,19 @@
         </div>
       </div>
       <div class="launch-thumbs">
-        <div class="launch-thumb launch-img-clickable" onclick="openLightbox('https://raw.githubusercontent.com/JNOHJINGYU/S-Class/main/JNOHJINGYU/images/image_04.png','S 450 4M L AMG Line – 측면')">
+        <div class="launch-thumb launch-img-clickable" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
           <img src="https://github.com/JNOHJINGYU/images/blob/main/amg_white_side.png?raw=true" alt="측면" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
           <div class="launch-img-zoom-hint">확대</div>
         </div>
-        <div class="launch-thumb launch-img-clickable" onclick="openLightbox('https://raw.githubusercontent.com/JNOHJINGYU/S-Class/main/JNOHJINGYU/images/image_06.png','S 450 4M L AMG Line – 정면')">
+        <div class="launch-thumb launch-img-clickable" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
           <img src="https://github.com/JNOHJINGYU/images/blob/main/amg_white_front.png?raw=true" alt="정면" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
           <div class="launch-img-zoom-hint">확대</div>
         </div>
-        <div class="launch-thumb launch-img-clickable" onclick="openLightbox('https://raw.githubusercontent.com/JNOHJINGYU/S-Class/main/JNOHJINGYU/images/image_08.png','S 450 4M L AMG Line – 인테리어 후석')">
+        <div class="launch-thumb launch-img-clickable" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
           <img src="https://github.com/JNOHJINGYU/images/blob/main/amg_white_interior_rear.png?raw=true" alt="인테리어 후석" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
           <div class="launch-img-zoom-hint">확대</div>
         </div>
-        <div class="launch-thumb launch-img-clickable" onclick="openLightbox('https://raw.githubusercontent.com/JNOHJINGYU/S-Class/main/JNOHJINGYU/images/image_10.png','S 450 4M L AMG Line – 대시보드')">
+        <div class="launch-thumb launch-img-clickable" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
           <img src="https://github.com/JNOHJINGYU/images/blob/main/amg_interior_driver.png?raw=true" alt="대시보드" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
           <div class="launch-img-zoom-hint">확대</div>
         </div>
@@ -1838,9 +1962,11 @@
 
 
 <!-- LIGHTBOX (공통) -->
-<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
-  <button class="lightbox-close" onclick="event.stopPropagation(); closeLightboxFull()">✕</button>
-  <div class="lightbox-img-wrap">
+<div class="lightbox-overlay" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">✕</button>
+  <button class="lightbox-gallery-prev" id="lbGalleryPrev">&#8249;</button>
+  <button class="lightbox-gallery-next" id="lbGalleryNext">&#8250;</button>
+  <div class="lightbox-img-wrap" id="lightboxImgWrap">
     <img id="lightboxImg" src="" alt="">
   </div>
   <div class="lightbox-video-wrap">
@@ -1849,6 +1975,7 @@
     </video>
   </div>
   <div class="lightbox-caption" id="lightboxCaption"></div>
+  <div class="lightbox-gallery-dots" id="lbGalleryDots"></div>
 </div>
 
 
@@ -1970,11 +2097,10 @@
   // ── SCROLL LOCK (iOS-safe, smooth-scroll-safe) ──
   let _scrollY = 0;
   let _scrollLockCount = 0;
-  let _prevScrollBehavior = '';
+
   function lockBodyScroll() {
     if (_scrollLockCount === 0) {
       _scrollY = window.scrollY || window.pageYOffset;
-      _prevScrollBehavior = document.documentElement.style.scrollBehavior;
       document.documentElement.style.scrollBehavior = 'auto';
       document.body.style.position = 'fixed';
       document.body.style.top = `-${_scrollY}px`;
@@ -1985,6 +2111,7 @@
     }
     _scrollLockCount++;
   }
+
   function unlockBodyScroll() {
     _scrollLockCount = Math.max(0, _scrollLockCount - 1);
     if (_scrollLockCount === 0) {
@@ -1994,57 +2121,180 @@
       document.body.style.right = '';
       document.body.style.width = '';
       document.body.style.overflow = '';
+      // smooth-scroll 비활성화 후 위치 복원, 그 다음 프레임에서 복구
+      document.documentElement.style.scrollBehavior = 'auto';
       window.scrollTo(0, _scrollY);
       requestAnimationFrame(() => {
-        document.documentElement.style.scrollBehavior = _prevScrollBehavior || '';
+        requestAnimationFrame(() => {
+          document.documentElement.style.scrollBehavior = '';
+        });
       });
     }
   }
 
-  function openLightbox(src, caption) {
+  // ── LIGHTBOX 공통 열기 헬퍼 ──
+  function _lbOpen() {
     const lb = document.getElementById('lightbox');
-    lb.classList.remove('video-mode');
-    document.getElementById('lightboxImg').src = src;
-    document.getElementById('lightboxCaption').textContent = caption || '';
-    lb.style.display = 'flex';
-    lb.style.zIndex = '2147483647';
-    lb.classList.add('active');
+    lb.classList.add('lb-visible');
+    // 다음 프레임에서 active 추가해야 opacity transition 작동
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => lb.classList.add('active'));
+    });
     lockBodyScroll();
   }
+
+  // ── 단일 이미지 라이트박스 ──
+  function openLightbox(src, caption) {
+    const lb = document.getElementById('lightbox');
+    lb.classList.remove('video-mode', 'gallery-mode');
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxCaption').textContent = caption || '';
+    document.getElementById('lbGalleryDots').innerHTML = '';
+    _galleryImages = [];
+    _isGalleryMode = false;
+    _lbOpen();
+  }
+
+  // ── 비디오 라이트박스 ──
   function openVideoLightbox(src, caption) {
     const lb = document.getElementById('lightbox');
+    lb.classList.remove('gallery-mode');
     lb.classList.add('video-mode');
     const vid = document.getElementById('lightboxVideo');
     document.getElementById('lightboxVideoSrc').src = src;
     vid.load();
     vid.play();
     document.getElementById('lightboxCaption').textContent = caption || '';
-    lb.style.display = 'flex';
-    lb.style.zIndex = '2147483647';
-    lb.classList.add('active');
-    lockBodyScroll();
+    document.getElementById('lbGalleryDots').innerHTML = '';
+    _galleryImages = [];
+    _isGalleryMode = false;
+    _lbOpen();
   }
+
+  // ── 갤러리 라이트박스 ──
+  let _galleryImages = [];
+  let _galleryIndex = 0;
+  let _isGalleryMode = false;
+
+  function openGalleryLightbox(images, startIndex) {
+    _galleryImages = images;
+    _galleryIndex = (startIndex || 0);
+    _isGalleryMode = true;
+
+    const lb = document.getElementById('lightbox');
+    lb.classList.remove('video-mode');
+    lb.classList.add('gallery-mode');
+
+    _updateGalleryUI();
+    _lbOpen();
+  }
+
+  function _updateGalleryUI() {
+    const current = _galleryImages[_galleryIndex];
+    document.getElementById('lightboxImg').src = current.src;
+    document.getElementById('lightboxCaption').textContent = current.caption || '';
+
+    // 도트 업데이트
+    const dotsEl = document.getElementById('lbGalleryDots');
+    dotsEl.innerHTML = '';
+    if (_galleryImages.length > 1) {
+      _galleryImages.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.className = 'lb-gallery-dot' + (i === _galleryIndex ? ' active' : '');
+        dot.addEventListener('click', (e) => { e.stopPropagation(); _goGallerySlide(i); });
+        dotsEl.appendChild(dot);
+      });
+    }
+  }
+
+  function _gallerySlide(dir) {
+    if (!_isGalleryMode || _galleryImages.length === 0) return;
+    _galleryIndex = (_galleryIndex + dir + _galleryImages.length) % _galleryImages.length;
+    _updateGalleryUI();
+  }
+
+  function _goGallerySlide(i) {
+    _galleryIndex = i;
+    _updateGalleryUI();
+  }
+
+  // ── 라이트박스 닫기 ──
   function closeLightboxFull() {
     const lb = document.getElementById('lightbox');
     lb.classList.remove('active');
-    lb.classList.remove('video-mode');
-    lb.style.display = 'none';
-    const vid = document.getElementById('lightboxVideo');
-    vid.pause();
-    vid.currentTime = 0;
+    // opacity transition 후 display:none
+    setTimeout(() => {
+      lb.classList.remove('lb-visible', 'video-mode', 'gallery-mode');
+      _isGalleryMode = false;
+      _galleryImages = [];
+      const vid = document.getElementById('lightboxVideo');
+      vid.pause();
+      vid.currentTime = 0;
+    }, 210);
     unlockBodyScroll();
   }
-  function closeLightbox(e) {
-    if (e.target === document.getElementById('lightbox')) {
-      closeLightboxFull();
-    }
-  }
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      closeLightboxFull();
-    }
+
+  // ── 라이트박스 이벤트 바인딩 ──
+  const _lb = document.getElementById('lightbox');
+
+  // 배경 클릭 시 닫기
+  _lb.addEventListener('click', (e) => {
+    if (e.target === _lb) closeLightboxFull();
   });
 
+  // 닫기 버튼
+  document.getElementById('lightboxClose').addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeLightboxFull();
+  });
+
+  // 갤러리 이전/다음 버튼
+  document.getElementById('lbGalleryPrev').addEventListener('click', (e) => {
+    e.stopPropagation();
+    _gallerySlide(-1);
+  });
+  document.getElementById('lbGalleryNext').addEventListener('click', (e) => {
+    e.stopPropagation();
+    _gallerySlide(1);
+  });
+
+  // ESC 키
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightboxFull();
+    if (e.key === 'ArrowLeft' && _isGalleryMode) _gallerySlide(-1);
+    if (e.key === 'ArrowRight' && _isGalleryMode) _gallerySlide(1);
+  });
+
+  // ── 터치 스와이프 (모바일 갤러리) ──
+  let _touchStartX = 0;
+  _lb.addEventListener('touchstart', (e) => {
+    _touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  _lb.addEventListener('touchend', (e) => {
+    const diff = _touchStartX - e.changedTouches[0].clientX;
+    if (_isGalleryMode && Math.abs(diff) > 50) {
+      _gallerySlide(diff > 0 ? 1 : -1);
+    }
+  }, { passive: true });
+
+  // ── 내장디자인 int-slide 갤러리 클릭 이벤트 ──
+  // DOMContentLoaded 후 바인딩 (이미지 src 가 img 태그에 이미 로드됨)
+  document.querySelectorAll('.int-card-leather').forEach(card => {
+    const slides = card.querySelectorAll('.int-slide');
+    const images = Array.from(slides).map(slide => {
+      const img = slide.querySelector('img');
+      return { src: img.src, caption: img.alt };
+    });
+
+    slides.forEach((slide, index) => {
+      slide.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // 슬라이더 버튼 클릭이면 무시
+        if (e.target.closest('.slider-btn')) return;
+        openGalleryLightbox(images, index);
+      });
+    });
+  });
 
 </script>
 </body>
