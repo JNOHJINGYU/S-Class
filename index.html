@@ -406,8 +406,12 @@
   }
   .og-meta-right { text-align:right; font-size:12px; color:rgba(255,255,255,0.6); letter-spacing:.04em; line-height:1.9; }
   .og-meta-right b { color:var(--accent); font-weight:500; }
+  /* Option Guide는 일반 .container(1280px) 제한을 따르지 않고 넓은 화면을 최대한 활용 (좌우 여백 최소화) */
+  .og-outer {
+    max-width:1800px; margin:56px auto 0; padding:0 32px; box-sizing:border-box;
+  }
   .og-wrap {
-    margin-top:56px; border:1px solid rgba(255,216,107,0.15); border-radius:12px;
+    border:1px solid rgba(255,216,107,0.15); border-radius:12px;
     overflow:hidden; background:linear-gradient(180deg,#0b0e13 0%, #08090c 100%);
     box-shadow:0 30px 80px rgba(0,0,0,.5);
   }
@@ -417,7 +421,8 @@
   }
   .og-scroll::-webkit-scrollbar { height:6px; }
   .og-scroll::-webkit-scrollbar-thumb { background:rgba(255,216,107,0.25); border-radius:3px; }
-  .og-table { border-collapse:separate; border-spacing:0; width:100%; min-width:1180px; }
+  /* 컬럼 폭을 콘텐츠가 편안히 들어가는 선에서 최소화해 불필요한 가로 스크롤 방지 */
+  .og-table { border-collapse:separate; border-spacing:0; width:100%; min-width:1140px; table-layout:auto; }
   .og-table th, .og-table td {
     border-bottom:1px solid rgba(255,255,255,0.06);
     border-right:1px solid rgba(255,255,255,0.05);
@@ -434,14 +439,14 @@
   nav.scrolled ~ * .og-table thead th { top:56px; }
   .og-corner {
     position:sticky; left:0; top:68px; z-index:40;
-    background:#0c0f14; min-width:180px; width:180px;
+    background:#0c0f14; min-width:150px; width:150px;
     border-right:1px solid rgba(255,216,107,0.15) !important;
   }
   .og-corner-inner {
-    padding:20px 20px; font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+    padding:20px 16px; font-size:11px; letter-spacing:.2em; text-transform:uppercase;
     color:var(--accent); display:flex; align-items:center; height:100%;
   }
-  .og-card { padding:22px 18px 20px; min-width:190px; text-align:left; position:relative; }
+  .og-card { padding:20px 14px 18px; min-width:165px; text-align:left; position:relative; }
   .og-card-tag {
     display:inline-block; font-size:9.5px; letter-spacing:.18em; text-transform:uppercase;
     color:var(--accent); border:1px solid rgba(255,216,107,0.3); border-radius:3px;
@@ -460,16 +465,16 @@
   /* 옵션명 첫번째 컬럼 (Sticky) */
   .og-row-label {
     position:sticky; left:0; z-index:10;
-    background:#0d1015; min-width:180px; width:180px;
+    background:#0d1015; min-width:150px; width:150px;
     font-size:13px; color:rgba(255,255,255,0.9); font-weight:500;
-    padding:16px 20px; letter-spacing:.01em; word-break:keep-all;
+    padding:16px 16px; letter-spacing:.01em; word-break:keep-all;
     border-right:1px solid rgba(255,216,107,0.15) !important;
   }
   .og-table tbody tr:nth-child(even) .og-row-label { background:#0f1319; }
   .og-table tbody tr:nth-child(even) td.og-cell { background:rgba(255,255,255,0.012); }
 
   .og-cell {
-    min-width:190px; padding:16px 18px; text-align:center;
+    min-width:165px; padding:16px 14px; text-align:center;
     font-size:13px; color:rgba(255,255,255,0.85); vertical-align:middle;
     transition:background .2s;
   }
@@ -623,6 +628,7 @@
     .interior-grid { grid-template-columns:repeat(2,1fr); }
     .lineup-cards { grid-template-columns:repeat(2,1fr); }
     .consultant-grid { grid-template-columns:1fr; }
+    .og-outer { padding:0 24px; }
   }
   @media (max-width:768px) {
     nav { padding:0 20px; height:60px; }
@@ -683,8 +689,9 @@
       overflow-wrap: break-word;
     }
     /* Option Guide 모바일 최적화 */
-    .og-corner, .og-row-label { min-width:120px; width:120px; }
-    .og-card, .og-cell { min-width:150px; }
+    .og-outer { padding:0 16px; margin-top:40px; }
+    .og-corner, .og-row-label { min-width:110px; width:110px; }
+    .og-card, .og-cell { min-width:140px; }
     .og-table thead th, .og-corner { top:60px; }
   }
 
@@ -1618,8 +1625,10 @@
       <p class="section-desc fade-in" style="margin-bottom:0;">모델별 옵션 및 기본사양 비교</p>
       <div class="og-meta-right fade-in">전 모델 <b>4MATIC</b> 기본 적용<br>SWB 2종 · LWB 4종</div>
     </div>
+  </div>
 
-    <div class="og-wrap fade-in">
+  <div class="og-outer fade-in">
+    <div class="og-wrap">
       <div class="og-scroll">
         <table class="og-table" id="ogTable">
           <thead>
@@ -1779,191 +1788,13 @@
               <td class="og-cell" data-col="5">LED 하이 퍼포먼스</td>
             </tr>
 
-            <tr>
-              <td class="og-row-label">후륜조향</td>
-              <td class="og-cell" data-col="0"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="1"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="2">4.5˚ 기본</td>
-              <td class="og-cell" data-col="3">4.5˚ 기본<span class="og-note">Digital Extra 10˚ 옵션</span></td>
-              <td class="og-cell" data-col="4">4.5˚ 기본</td>
-              <td class="og-cell" data-col="5">4.5˚ 기본</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">에어 서스펜션</td>
-              <td class="og-cell" data-col="0">에어매틱</td>
-              <td class="og-cell" data-col="1">에어매틱</td>
-              <td class="og-cell" data-col="2">에어매틱</td>
-              <td class="og-cell" data-col="3">에어매틱</td>
-              <td class="og-cell" data-col="4">에어매틱</td>
-              <td class="og-cell og-strong" data-col="5">E-액티브<br>바디 컨트롤</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">브레이크</td>
-              <td class="og-cell" data-col="0">표준 브레이크 시스템</td>
-              <td class="og-cell" data-col="1">표준 브레이크 시스템</td>
-              <td class="og-cell" data-col="2">표준 브레이크 시스템</td>
-              <td class="og-cell og-strong" data-col="3">AMG 고성능 브레이크</td>
-              <td class="og-cell" data-col="4">표준 브레이크 시스템</td>
-              <td class="og-cell" data-col="5">표준 브레이크 시스템</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">오디오</td>
-              <td class="og-cell" data-col="0">버메스터 서라운드</td>
-              <td class="og-cell" data-col="1">버메스터 서라운드</td>
-              <td class="og-cell" data-col="2">버메스터 서라운드</td>
-              <td class="og-cell" data-col="3">버메스터 서라운드</td>
-              <td class="og-cell og-strong" data-col="4">버메스터 하이엔드 3D</td>
-              <td class="og-cell og-strong" data-col="5">버메스터 하이엔드 3D</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">디지털 계기판</td>
-              <td class="og-cell" data-col="0"><span class="og-check">✓</span> 12.3" 디지털 클러스터</td>
-              <td class="og-cell" data-col="1"><span class="og-check">✓</span> 12.3" 디지털 클러스터</td>
-              <td class="og-cell" data-col="2"><span class="og-check">✓</span> 12.3" 디지털 클러스터</td>
-              <td class="og-cell" data-col="3"><span class="og-check">✓</span> 12.3" 디지털 클러스터</td>
-              <td class="og-cell" data-col="4"><span class="og-check">✓</span> 12.3" 디지털 클러스터</td>
-              <td class="og-cell" data-col="5"><span class="og-check">✓</span> 12.3" 디지털 클러스터</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">MBUX</td>
-              <td class="og-cell" data-col="0">MBUX</td>
-              <td class="og-cell" data-col="1">MBUX</td>
-              <td class="og-cell" data-col="2">MBUX</td>
-              <td class="og-cell" data-col="3">MBUX</td>
-              <td class="og-cell og-strong" data-col="4">MBUX 하이엔드</td>
-              <td class="og-cell og-strong" data-col="5">MBUX 하이엔드</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">증강현실 내비게이션</td>
-              <td class="og-cell" data-col="0"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="1"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="2"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="3">옵션</td>
-              <td class="og-cell" data-col="4"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="5"><span class="og-check">✓</span> 기본</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">Head-Up Display</td>
-              <td class="og-cell" data-col="0"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="1"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="2">옵션</td>
-              <td class="og-cell" data-col="3">옵션</td>
-              <td class="og-cell" data-col="4"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="5"><span class="og-check">✓</span> 기본</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">통풍시트</td>
-              <td class="og-cell" data-col="0"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="1"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="2">옵션</td>
-              <td class="og-cell" data-col="3">옵션</td>
-              <td class="og-cell" data-col="4"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="5"><span class="og-check">✓</span> 기본</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">마사지시트</td>
-              <td class="og-cell" data-col="0"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="1"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="2"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="3">옵션</td>
-              <td class="og-cell" data-col="4"><span class="og-check">✓</span> 앞좌석 기본</td>
-              <td class="og-cell" data-col="5"><span class="og-check">✓</span> 전 좌석 기본</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">열선시트</td>
-              <td class="og-cell" data-col="0"><span class="og-check">✓</span> 앞좌석</td>
-              <td class="og-cell" data-col="1"><span class="og-check">✓</span> 앞좌석</td>
-              <td class="og-cell" data-col="2"><span class="og-check">✓</span> 앞·뒤좌석</td>
-              <td class="og-cell" data-col="3"><span class="og-check">✓</span> 앞·뒤좌석</td>
-              <td class="og-cell" data-col="4"><span class="og-check">✓</span> 앞·뒤좌석</td>
-              <td class="og-cell" data-col="5"><span class="og-check">✓</span> 앞·뒤좌석</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">파노라마 선루프</td>
-              <td class="og-cell" data-col="0"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="1"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="2"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="3"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="4"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="5"><span class="og-check">✓</span> 기본</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">액티브 앰비언트 라이트</td>
-              <td class="og-cell" data-col="0"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="1"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="2"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="3"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="4"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="5"><span class="og-check">✓</span> 기본</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">DIGITAL LIGHT</td>
-              <td class="og-cell" data-col="0"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="1"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="2"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="3"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="4"><span class="og-check">✓</span> 기본</td>
-              <td class="og-cell" data-col="5"><span class="og-check">✓</span> 기본</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">E-ABC</td>
-              <td class="og-cell" data-col="0"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="1"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="2"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="3"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="4"><span class="og-dash">—</span></td>
-              <td class="og-cell og-strong" data-col="5"><span class="og-check">✓</span> 기본</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">Executive Rear Package</td>
-              <td class="og-cell" data-col="0"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="1"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="2">옵션</td>
-              <td class="og-cell" data-col="3">옵션</td>
-              <td class="og-cell" data-col="4">옵션</td>
-              <td class="og-cell og-strong" data-col="5"><span class="og-check">✓</span> 포함</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">First Class Rear</td>
-              <td class="og-cell" data-col="0"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="1"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="2"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="3"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="4"><span class="og-dash">—</span></td>
-              <td class="og-cell" data-col="5">옵션</td>
-            </tr>
-
-            <tr>
-              <td class="og-row-label">기타 차별화 옵션</td>
-              <td class="og-cell" data-col="0">앞좌석 열선/통풍<br>뒷좌석 열선</td>
-              <td class="og-cell" data-col="1">앞좌석 열선/통풍<br>뒷좌석 열선</td>
-              <td class="og-cell" data-col="2">뒷좌석 컴포트 도어<br>뒷좌석 열선/통풍</td>
-              <td class="og-cell" data-col="3">MBUX 하이엔드<br>앞좌석 컨티테인먼트</td>
-              <td class="og-cell" data-col="4">소피 패키지<br>IR 라미네이티드 글라스</td>
-              <td class="og-cell" data-col="5">MBUX AR HUD<br>익스클루시브 패키지</td>
-            </tr>
-
           </tbody>
         </table>
       </div>
     </div>
+  </div>
 
+  <div class="container">
     <p class="og-footnote fade-in">표시된 옵션 및 사양은 트림 구성에 따라 변경될 수 있으며, 정확한 사양은 공식 딜러 상담을 통해 확인하시기 바랍니다. 우드 트림 이미지는 실제 색상과 차이가 있을 수 있습니다.</p>
   </div>
 </section>
