@@ -507,7 +507,54 @@
   }
   .og-wood-cap { font-size:11.5px; color:rgba(255,255,255,0.8); line-height:1.6; word-break:keep-all; }
 
-  .og-footnote { margin-top:18px; font-size:12px; color:rgba(255,255,255,0.4); line-height:1.9; word-break:keep-all; }
+  .og-footnote { margin-top:18px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.08); font-size:12px; color:rgba(255,255,255,0.4); line-height:1.9; word-break:keep-all; }
+
+  /* ─── OPTION GUIDE: 공통 사양 + 모델별 추가 옵션 (보조 표, 기존 표와 여백 없이 한 카드로 연결) ─── */
+  .og-sub-header {
+    padding:18px 20px 12px;
+    border-top:1px solid rgba(255,216,107,0.18);
+    border-bottom:1px solid rgba(255,216,107,0.18);
+    background:linear-gradient(180deg,#0d1015 0%, #0a0c10 100%);
+  }
+  .og-sub-title {
+    font-size:11px; letter-spacing:.25em; text-transform:uppercase;
+    color:var(--accent); font-weight:600;
+  }
+  .og-table2 { border-collapse:separate; border-spacing:0; width:100%; min-width:1150px; table-layout:auto; }
+  .og-table2 td {
+    border-right:1px solid rgba(255,255,255,0.05);
+    vertical-align:top;
+  }
+  .og-table2 td:last-child { border-right:none; }
+  .og2-label {
+    position:sticky; left:0; z-index:5;
+    background:#0d1015; min-width:88px; width:88px;
+    font-size:12px; color:rgba(255,255,255,0.85); font-weight:500;
+    letter-spacing:.06em; text-align:center; line-height:1.6;
+    padding:20px 8px; word-break:keep-all;
+    border-right:1px solid rgba(255,216,107,0.15) !important;
+  }
+  .og2-cell { min-width:184px; padding:18px 16px; }
+  .og2-cell.og2-wide { min-width:320px; }
+  .og2-col-title {
+    font-size:13px; font-weight:700; color:var(--white); letter-spacing:.01em;
+    margin-bottom:12px; padding-bottom:10px; line-height:1.4;
+    border-bottom:1px solid rgba(255,216,107,0.15);
+    word-break:keep-all;
+  }
+  .og2-list { list-style:none; font-size:12px; color:rgba(255,255,255,0.8); line-height:1.6; }
+  .og2-list li {
+    padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.045);
+    word-break:keep-all;
+  }
+  .og2-list li:last-child { border-bottom:none; }
+  .og2-list.og2-grid2 { columns:2; column-gap:22px; }
+  .og2-list.og2-grid2 li { break-inside:avoid; }
+  .og2-list li.og2-sub { padding-left:12px; position:relative; }
+  .og2-list li.og2-sub::before {
+    content:''; position:absolute; left:0; top:12px;
+    width:3px; height:9px; background:var(--accent-dim);
+  }
 
   /* ─── CONSULTANT ─── */
   #consultant {
@@ -693,6 +740,10 @@
     .og-corner, .og-row-label { min-width:110px; width:110px; }
     .og-card, .og-cell { min-width:140px; }
     .og-table thead th, .og-corner { top:60px; }
+    /* 공통 사양 + 모델별 추가 옵션 보조 표: 컬럼 최소폭 유지, 좌우 스와이프 */
+    .og2-label { min-width:80px; width:80px; }
+    .og2-cell { min-width:190px; padding:16px 16px; }
+    .og2-cell.og2-wide { min-width:320px; }
   }
 
   /* ─── LIGHTBOX ─── */
@@ -1778,24 +1829,106 @@
               </td>
             </tr>
 
-            <tr>
-              <td class="og-row-label">헤드램프</td>
-              <td class="og-cell" data-col="0">LED 하이 퍼포먼스</td>
-              <td class="og-cell" data-col="1">LED 하이 퍼포먼스</td>
-              <td class="og-cell" data-col="2">LED 하이 퍼포먼스</td>
-              <td class="og-cell" data-col="3">LED 하이 퍼포먼스</td>
-              <td class="og-cell" data-col="4">LED 하이 퍼포먼스</td>
-              <td class="og-cell" data-col="5">LED 하이 퍼포먼스</td>
-            </tr>
+          </tbody>
+        </table>
+      </div>
 
+      <!-- 공통 사양 + 모델별 추가 옵션 (기존 표 아래에 여백 없이 연결) -->
+      <div class="og-sub-header">
+        <span class="og-sub-title">공통 사양 + 모델별 추가 옵션</span>
+      </div>
+
+      <div class="og-scroll">
+        <table class="og-table2" id="ogTable2">
+          <tbody>
+            <tr>
+              <td class="og2-label">옵션<br>구성</td>
+
+              <td class="og2-cell og2-wide">
+                <div class="og2-col-title">전 모델 공통 사양 (22종)</div>
+                <ul class="og2-list og2-grid2">
+                  <li>일루미네이티드 라디에이터 그릴</li>
+                  <li>디지털 라이트</li>
+                  <li>MBUX 슈퍼스크린</li>
+                  <li>앞좌석 열선 암레스트</li>
+                  <li>플러시 도어 핸들 키리스 고</li>
+                  <li>변형 도어 설계 컨트롤</li>
+                  <li>공기 청정 패키지</li>
+                  <li>매직 비전 컨트롤</li>
+                  <li>리어 액슬 스티어링 (4.5도)</li>
+                  <li>앞좌석 열선 및 통풍 시트</li>
+                  <li>헤드업 디스플레이</li>
+                  <li>부메스터 3D 서라운드 사운드</li>
+                  <li>에어 밸런스 패키지</li>
+                  <li>액티브 앰비언트 라이트</li>
+                  <li>파노라믹 선루프</li>
+                  <li>변조 빔 프로젝션</li>
+                  <li>뒷좌석 열선 시트</li>
+                  <li>뒷좌석 사이드백</li>
+                  <li>선 프로텍션 패키지</li>
+                  <li>열선 패키지</li>
+                  <li>Digital Extra: 360° 카메라 주차 어시스트</li>
+                  <li>Digital Extra: MB 드라이브 어시스트</li>
+                </ul>
+              </td>
+
+              <td class="og2-cell">
+                <div class="og2-col-title">메모리 기능 포함<br>뒷좌석 전동 시트</div>
+                <ul class="og2-list">
+                  <li>뒷좌석 메모리 기능</li>
+                  <li>뒷좌석 열선 및 통풍 시트</li>
+                  <li>뒷좌석 시트 허용 플러스</li>
+                </ul>
+              </td>
+
+              <td class="og2-cell">
+                <div class="og2-col-title">뒷좌석 컴포트 패키지</div>
+                <ul class="og2-list">
+                  <li>디자인 나이트 내장</li>
+                  <li class="og2-sub">뒷좌석 무선 충전</li>
+                  <li class="og2-sub">뒷좌석 MBUX 리모트 컨트롤</li>
+                  <li class="og2-sub">뒷좌석 에어백</li>
+                  <li>열선 패키지 플러스</li>
+                  <li class="og2-sub">MBUX 하이엔드 뒷좌석 엔터테인먼트</li>
+                  <li class="og2-sub">무선 헤드셋 (2개)</li>
+                  <li>앞좌석 액티브 멀티컨투어 시트</li>
+                </ul>
+              </td>
+
+              <td class="og2-cell">
+                <div class="og2-col-title">뒷좌석 컴포트<br>패키지 플러스</div>
+                <ul class="og2-list">
+                  <li>뒷좌석 마사지 패키지</li>
+                  <li class="og2-sub">쇼퍼 패키지</li>
+                  <li class="og2-sub">뒷좌석 벨트 백</li>
+                  <li class="og2-sub">이그제큐티브 시트</li>
+                  <li>앰비언트 뒷좌석 라이트</li>
+                  <li class="og2-sub">센터백</li>
+                  <li class="og2-sub">IR 라미네이티드 글라스</li>
+                  <li>리어 액슬 스티어링 (10도)</li>
+                </ul>
+              </td>
+
+              <td class="og2-cell">
+                <div class="og2-col-title">익스클루시브 내피 가죽</div>
+                <ul class="og2-list">
+                  <li>MBUX 증강현실 헤드업 디스플레이</li>
+                  <li>3D 계기반</li>
+                  <li>익스클루시브 패키지</li>
+                  <li>디지털 라이트 프로젝션 기능</li>
+                  <li>도어트림 내피 컨트롤</li>
+                  <li>Digital Extra: 어나더워 컴포트</li>
+                </ul>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
 
-  <div class="container">
-    <p class="og-footnote fade-in">표시된 옵션 및 사양은 트림 구성에 따라 변경될 수 있으며, 정확한 사양은 공식 딜러 상담을 통해 확인하시기 바랍니다. 우드 트림 이미지는 실제 색상과 차이가 있을 수 있습니다.</p>
+  <div class="og-outer">
+    <p class="og-footnote fade-in">표시된 옵션 및 사양은 트림 구성에 따라 변경될 수 있으며, 정확한 사양은 공식 딜러 상담을 통해 확인하시기 바랍니다. 우드 트림 이미지는 실제 색상과 차이가 있을 수 있습니다.<br>※ MY27 기준. 국내 상황 및 제조사 사양에 따라 변경될 수 있으며, 실제 국내 출시 모델 및 옵션 구성과 상이할 수 있습니다.</p>
   </div>
 </section>
 
