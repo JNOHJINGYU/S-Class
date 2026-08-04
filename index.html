@@ -106,7 +106,7 @@
   section { padding: 120px 0; }
   /* 오프스크린 섹션 렌더링/페인트 범위를 격리해 스크롤 시 재계산 비용을 줄임 (레이아웃·디자인 변화 없음) */
   /* #optionguide는 Sticky Header/Column 기능과의 상호작용을 피하기 위해 제외 */
-  #facelift, #exterior, #interior, #lineup, #launch, #consultant {
+  #facelift, #exterior, #interior, #lineup, #launch {
     contain: layout style paint;
   }
   .container { max-width:1280px; margin:0 auto; padding:0 48px; }
@@ -555,37 +555,6 @@
     width:3px; height:9px; background:var(--accent-dim);
   }
 
-  /* ─── CONSULTANT ─── */
-  #consultant {
-    background:linear-gradient(135deg,var(--navy) 0%, var(--black) 100%);
-    position:relative; overflow:hidden;
-  }
-  #consultant::before {
-    content:''; position:absolute; top:-1px; left:0; right:0; height:1px;
-    background:linear-gradient(to right, transparent, rgba(255,216,107,0.3), transparent);
-  }
-  .consultant-grid { display:grid; grid-template-columns:1fr 2fr; gap:80px; align-items:start; margin-top:64px; }
-  .consultant-profile { display:flex; flex-direction:column; gap:20px; }
-  .profile-name { font-family:'Pretendard', 'Noto Sans KR', sans-serif, 'Noto Serif KR', sans-serif; font-size:24px; font-weight:900; margin-bottom:6px; }
-  .profile-title { font-size:13px; color:rgba(255,255,255,0.88); letter-spacing:.08em; margin-bottom:16px; }
-  .profile-cert {
-    display:inline-block; font-size:11px; letter-spacing:.15em; color:var(--accent);
-    border:1px solid var(--accent-dim); padding:5px 14px;
-  }
-  .consultant-info { display:flex; flex-direction:column; gap:48px; }
-  .info-block-title {
-    font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:var(--accent); margin-bottom:16px;
-  }
-  .info-block-text { font-size:17px; color:rgba(255,255,255,0.92); line-height:2.0; word-break:keep-all; }
-  .info-features { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
-  .info-feat {
-    background:var(--card); border:1px solid var(--card-border); border-radius:6px;
-    padding:22px; transition:all .3s;
-  }
-  .info-feat:hover { border-color:rgba(255,216,107,0.2); }
-  .info-feat-title { font-size:14px; font-weight:500; margin-bottom:10px; word-break:keep-all; }
-  .info-feat-desc { font-size:13px; color:rgba(255,255,255,0.88); line-height:1.8; word-break:keep-all; }
-
   /* ─── FOOTER ─── */
   footer {
     background:var(--black); border-top:1px solid rgba(255,255,255,0.05);
@@ -673,7 +642,6 @@
     .features-grid { grid-template-columns:repeat(2,1fr); gap:16px; }
     .interior-grid { grid-template-columns:repeat(2,1fr); }
     .lineup-cards { grid-template-columns:repeat(2,1fr); }
-    .consultant-grid { grid-template-columns:1fr; }
     .og-outer { padding:0 24px; }
   }
   @media (max-width:768px) {
@@ -703,7 +671,6 @@
     .lineup-cards { grid-template-columns:1fr; }
     .launch-body { grid-template-columns:1fr; }
     .launch-thumbs { grid-template-columns:repeat(2,1fr); }
-    .info-features { grid-template-columns:1fr; }
     .footer-inner { flex-direction:column; gap:16px; text-align:center; }
     .facelift-images { grid-template-columns:1fr; }
     .features-grid {
@@ -713,7 +680,6 @@
     /* 모바일 글자 크기 최적화 */
     .section-desc { font-size:16px; line-height:1.95; }
     .hero-copy { font-size:16px; }
-    .info-block-text { font-size:16px; }
     .feat-sub { font-size:14px; }
     .feat-name { font-size:17px; }
     .spec-row { font-size:13px; }
@@ -725,10 +691,9 @@
     /* 모바일 여백 최적화 */
     .lineup-info { padding:20px 16px; }
     .launch-spec-panel { padding:28px 20px; }
-    .consultant-grid { gap:40px; }
     .footer-legal { padding:0 24px; }
     /* word-break 최적화 */
-    p, li, .section-desc, .info-block-text, .excl-opts li,
+    p, li, .section-desc, .excl-opts li,
     .feat-sub, .lineup-model, .tag, .spec-row,
     .launch-model-title {
       word-break: keep-all;
@@ -2043,56 +2008,6 @@
         <div class="launch-thumb" data-lb="1" data-caption="S 500 4MATIC Long – 대시보드">
           <img decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_interior_driver.png?raw=true" alt="디테일 이미지" loading="lazy">
           <div class="launch-img-zoom-hint">확대</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 7: CONSULTANT -->
-<section id="consultant">
-  <div class="container">
-    <span class="section-eyebrow fade-in">Your Consultant</span>
-    <h2 class="section-title fade-in">노진규 부장</h2>
-    <p class="section-desc fade-in">직판 시대, 누구에게 구매하느냐가 곧 서비스의 차이입니다. 20년 경력의 벤츠 전문 컨설턴트가 출고부터 이후까지 함께합니다.</p>
-
-    <div class="consultant-grid fade-in">
-      <div class="consultant-profile">
-        <!-- ↓ 프로필 이미지 URL을 아래 src에 입력하세요 -->
-        <div style="aspect-ratio:3/4;border-radius:8px;overflow:hidden;background:#0f1318;border:1px solid rgba(255,216,107,0.15);">
-          <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/nohjingyu.jpg?raw=true" alt="노진규 부장 프로필"
-            style="width:100%;height:100%;object-fit:cover;display:block;"
-            onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=\'font-size:10px;letter-spacing:.3em;color:rgba(255,216,107,0.4);text-transform:uppercase;\'>PROFILE IMAGE</span>';"
-          >
-        </div>
-        <div>
-          <div class="profile-name">노진규</div>
-          <div class="profile-title">Mercedes-Benz Korea · 공식 딜러 부장</div>
-          <div class="profile-cert">공식 인증 S-Class 전문 컨설턴트</div>
-        </div>
-      </div>
-      <div class="consultant-info">
-        <div>
-          <div class="info-block-title">고객관리 철학</div>
-          <div class="info-block-text">단순히 차량을 판매하는 것이 아닙니다. 고객이 원하는 S-Class를 정확히 파악하고, 최적의 모델과 옵션을 제안합니다. 구매 이후에도 지속적인 케어를 통해 真의 프리미엄 경험을 제공합니다.</div>
-        </div>
-        <div class="info-features">
-          <div class="info-feat">
-            <div class="info-feat-title">출고 후 전담 관리</div>
-            <div class="info-feat-desc">출고 이후에도 전담 연락처를 통해 정비, 소모품, AS까지 원스톱 케어를 제공합니다.</div>
-          </div>
-          <div class="info-feat">
-            <div class="info-feat-title">VIP 컨설팅 서비스</div>
-            <div class="info-feat-desc">옵션 선택부터 색상 코디네이션까지 1:1 맞춤 상담으로 최적의 구성을 안내합니다.</div>
-          </div>
-          <div class="info-feat">
-            <div class="info-feat-title">벤츠 공식 딜러</div>
-            <div class="info-feat-desc">Mercedes-Benz Korea 공식 인증 딜러로 모든 프로세스가 공식 채널을 통해 진행됩니다.</div>
-          </div>
-          <div class="info-feat">
-            <div class="info-feat-title">시승 예약 대행</div>
-            <div class="info-feat-desc">신형 S-Class 전용 시승차 운영으로 구매 결정 전 충분한 체험 기회를 제공합니다.</div>
-          </div>
         </div>
       </div>
     </div>
