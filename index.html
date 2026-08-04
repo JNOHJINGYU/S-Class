@@ -6,12 +6,15 @@
 <title>The new S-Class — Mercedes-Benz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Google Fonts replaced by SCDream -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<!-- 폰트:렌더 블로킹 방지를 위해 preload 후 비동기 적용 (media swap 기법) -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+</noscript>
   <style>
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 :root {
     --black: #060608;
     --navy: #080c14;
@@ -98,17 +101,14 @@
     content:''; position:absolute; inset:0;
     background: linear-gradient(120deg, transparent 30%, rgba(255,216,107,0.03) 50%, transparent 70%);
   }
-  .ph-label {
-    font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:rgba(255,216,107,0.3);
-  }
-  .ph-icon {
-    width:32px; height:32px; border:1px solid rgba(255,216,107,0.15);
-    border-radius:2px; display:flex; align-items:center; justify-content:center;
-  }
-  .ph-icon svg { opacity:.3; }
 
   /* ─── SECTION WRAPPER ─── */
   section { padding: 120px 0; }
+  /* 오프스크린 섹션 렌더링/페인트 범위를 격리해 스크롤 시 재계산 비용을 줄임 (레이아웃·디자인 변화 없음) */
+  /* #optionguide는 Sticky Header/Column 기능과의 상호작용을 피하기 위해 제외 */
+  #facelift, #exterior, #interior, #lineup, #launch, #consultant {
+    contain: layout style paint;
+  }
   .container { max-width:1280px; margin:0 auto; padding:0 48px; }
 
   .section-eyebrow {
@@ -157,7 +157,6 @@
       linear-gradient(90deg, rgba(255,216,107,0.03) 1px, transparent 1px);
     background-size: 80px 80px;
   }
-  .hero-orb { display:none; }
   .hero-content {
     position:relative; z-index:2;
     display:flex; flex-direction:column; justify-content:flex-end;
@@ -187,7 +186,6 @@
       1px 1px 0 rgba(0,0,0,.4),
       -1px -1px 0 rgba(0,0,0,.4);
   }
-  .hero-img { width:100%; aspect-ratio:4/3; }
   .hero-scroll {
     position:absolute; bottom:40px; left:50%; transform:translateX(-50%);
     display:flex; flex-direction:column; align-items:center; gap:10px;
@@ -221,7 +219,7 @@
     gap: 24px;
     background: transparent;
   }
-  .feat-card {
+  .feat-card { will-change:transform;
     background: linear-gradient(135deg, #0d1520 0%, #111827 55%, #0a1018 100%);
     border: 1px solid rgba(160, 185, 255, 0.10);
     border-radius: 20px;
@@ -252,8 +250,6 @@
     box-shadow: 0 14px 44px rgba(0,0,0,0.38), 0 0 0 1px rgba(255,216,107,0.06);
   }
   .feat-card:hover::after { opacity: 1; }
-  .feat-icon { display: none; }
-  .feat-icon svg { color: var(--accent); }
   .feat-name {
     font-size: 19px; font-weight: 700; letter-spacing: .01em;
     line-height: 1.45; word-break: keep-all; white-space: normal;
@@ -271,7 +267,7 @@
   .exterior-grid {
     display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:56px;
   }
-  .ext-card {
+  .ext-card { will-change:transform;
     background:var(--card); border:1px solid var(--card-border); border-radius:8px;
     overflow:hidden; transition:all .4s;
   }
@@ -288,14 +284,12 @@
   .interior-grid {
     display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:56px;
   }
-  .interior-grid .wide { grid-column:span 1; }
-  .int-card {
+  .int-card { will-change:transform;
     background:var(--card); border:1px solid var(--card-border); border-radius:8px;
     overflow:hidden; transition:all .4s; cursor:default;
     position: relative;
   }
   .int-card:hover { border-color:rgba(255,216,107,0.25); transform:translateY(-4px); box-shadow:0 24px 60px rgba(0,0,0,.5); }
-  .int-ph { aspect-ratio:4/3; }
   .int-info { padding:20px; }
   .int-name { font-size:15px; font-weight:400; margin-bottom:8px; letter-spacing:.03em; line-height:1.6; word-break:keep-all; }
   .int-code { font-size:12px; color:rgba(255,255,255,0.88); letter-spacing:.12em; }
@@ -313,7 +307,7 @@
   .lineup-cards {
     display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
   }
-  .lineup-card {
+  .lineup-card { will-change:transform;
     background:var(--card); border:1px solid var(--card-border); border-radius:10px;
     overflow:hidden; transition:all .4s;
   }
@@ -384,7 +378,7 @@
   }
   .excl-opts li::before { content:''; width:4px; height:1px; background:var(--accent-dim); flex-shrink:0; }
   .launch-thumbs { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
-  /* .launch-thumb 스타일은 아래 img-zoom-wrap 섹션에서 정의 */
+  /* .launch-thumb 스타일은 아래에서 별도 정의 */
 
   /* ─── LAUNCH IMAGE CLICKABLE ─── */
   .launch-img-clickable {
@@ -392,7 +386,7 @@
     background:#0a0e14;
     display:flex; align-items:center; justify-content:center;
   }
-  .launch-img-clickable img { width:100%; height:100%; object-fit:contain; display:block; padding:12px; box-sizing:border-box; transition:transform .6s cubic-bezier(.25,.46,.45,.94); }
+  .launch-img-clickable img { width:100%; height:100%; object-fit:contain; display:block; padding:12px; box-sizing:border-box; transition:transform .6s cubic-bezier(.25,.46,.45,.94); will-change:transform; }
   .launch-img-clickable:hover img { transform:scale(1.04); }
   .launch-img-zoom-hint {
     position:absolute; bottom:12px; right:12px;
@@ -500,7 +494,7 @@
     background:linear-gradient(135deg,#141820 0%, #1a1f2a 50%, #141820 100%);
     border:1px solid rgba(255,216,107,0.12);
   }
-  .og-img-ph img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s cubic-bezier(.25,.46,.45,.94); }
+  .og-img-ph img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s cubic-bezier(.25,.46,.45,.94); will-change:transform; }
   .og-img-ph:hover img { transform:scale(1.08); }
   .og-img-ph-fallback {
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
@@ -521,7 +515,6 @@
   }
   .consultant-grid { display:grid; grid-template-columns:1fr 2fr; gap:80px; align-items:start; margin-top:64px; }
   .consultant-profile { display:flex; flex-direction:column; gap:20px; }
-  .profile-ph { aspect-ratio:3/4; border-radius:4px; }
   .profile-name { font-family:'Pretendard', 'Noto Sans KR', sans-serif, 'Noto Serif KR', sans-serif; font-size:24px; font-weight:900; margin-bottom:6px; }
   .profile-title { font-size:13px; color:rgba(255,255,255,0.88); letter-spacing:.08em; margin-bottom:16px; }
   .profile-cert {
@@ -568,7 +561,7 @@
     position:relative; overflow:hidden;
     aspect-ratio:16/10; background:#111;
   }
-  .int-slider-track {
+  .int-slider-track { will-change:transform;
     display:flex; height:100%;
     transition:transform .45s cubic-bezier(.25,.46,.45,.94);
     will-change:transform;
@@ -623,62 +616,9 @@
     background:var(--accent); border-color:var(--accent); transform:scale(1.2);
   }
 
-  /* ─── LEATHER LIGHTBOX (레거시 CSS - 삭제됨, 공통 lightbox-overlay 사용) ─── */
-  .lb-leather-wrap {
-    position:relative; width:92vw; max-width:1300px;
-    display:flex; align-items:center; gap:0;
-  }
-  .lb-leather-track-outer { overflow:hidden; flex:1; border-radius:4px; }
-  .lb-leather-track {
-    display:flex;
-    transition:transform .4s cubic-bezier(.25,.46,.45,.94);
-  }
-  .lb-leather-slide {
-    min-width:100%; position:relative;
-  }
-  .lb-leather-slide img {
-    width:100%; height:auto; max-height:88vh; object-fit:contain;
-    display:block; border-radius:4px;
-    box-shadow:0 40px 120px rgba(0,0,0,.8);
-    animation:lbScaleIn .3s cubic-bezier(.25,.46,.45,.94);
-  }
-  .lb-leather-caption {
-    position:absolute; bottom:-28px; left:50%; transform:translateX(-50%);
-    font-size:12px; letter-spacing:.15em; color:rgba(255,255,255,.4);
-    white-space:nowrap;
-  }
-  .lb-nav-btn {
-    width:52px; height:52px; border-radius:50%;
-    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15);
-    color:#fff; font-size:26px; cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    flex-shrink:0; transition:all .2s; margin:0 12px;
-  }
-  .lb-nav-btn:hover { background:rgba(200,170,114,.25); border-color:var(--accent-dim); }
-  .lb-close-btn {
-    position:fixed; top:28px; right:36px;
-    width:44px; height:44px; border-radius:50%;
-    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15);
-    color:#fff; font-size:20px; cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    transition:all .2s; z-index:2147483647;
-  }
-  .lb-close-btn:hover { background:rgba(255,255,255,.18); transform:scale(1.1); }
-  .lb-dots {
-    position:fixed; bottom:32px; left:50%; transform:translateX(-50%);
-    display:flex; gap:8px; z-index:2147483647;
-  }
-  .lb-dot {
-    width:8px; height:8px; border-radius:50%;
-    background:rgba(255,255,255,.25); cursor:pointer; border:1px solid rgba(255,255,255,.2);
-    transition:all .3s;
-  }
-  .lb-dot.active { background:var(--accent); border-color:var(--accent); }
-
   /* ─── RESPONSIVE ─── */
   @media (max-width:1024px) {
     .hero-content { grid-template-columns:1fr; gap:40px; }
-    .hero-img { max-width:500px; }
     .features-grid { grid-template-columns:repeat(2,1fr); gap:16px; }
     .interior-grid { grid-template-columns:repeat(2,1fr); }
     .lineup-cards { grid-template-columns:repeat(2,1fr); }
@@ -907,7 +847,6 @@
 
 
 /* Image zoom */
-.img-zoom-wrap { overflow: hidden; cursor: pointer; position:relative; }
 
 .launch-img {
   width: 100%; height: 100%;
@@ -915,7 +854,6 @@
   transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
 }
 
-.img-zoom-wrap:hover .launch-img { transform: scale(1.04); }
 
 /* Launch thumb contain */
 .launch-thumb {
@@ -976,17 +914,13 @@
     height: auto;
   }
 
-  .car-image img,
-  .vehicle-image img,
-  .model-image img,
-  .product-card img,
-  .launch-card img,
-  .card img {
+  .launch-card img {
     width: 100%;
     height: auto !important;
     object-fit: contain !important;
     object-position: center center !important;
     display: block;
+    margin-bottom: 0 !important;
   }
 
   /* lightbox 이미지는 위 규칙 제외 — 반드시 독립 적용 */
@@ -1000,53 +934,8 @@
     object-position: center center !important;
   }
 
-  .car-image,
-  .vehicle-image,
-  .model-image,
-  .image-wrapper,
-  .product-card,
-  .launch-card,
-  .card {
-    overflow: hidden;
-  }
-}
-
-
-@media (max-width: 768px) {
-  .car-image,
-  .vehicle-image,
-  .model-image,
-  .image-wrapper {
-    height: auto !important;
-    min-height: 0 !important;
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-  }
-
-  .product-card,
-  .launch-card,
-  .card {
+  .launch-card {
     padding-bottom: 24px !important;
-  }
-
-  .car-image img,
-  .vehicle-image img,
-  .model-image img,
-  .product-card img,
-  .launch-card img,
-  .card img {
-    margin-bottom: 0 !important;
-  }
-}
-
-
-@media (max-width: 768px) {
-  .specification,
-  .spec-section,
-  .specs,
-  .spec-list {
-    margin-top: 20px !important;
-    padding-top: 20px !important;
   }
 }
 
@@ -1151,7 +1040,7 @@
 <section id="hero">
   <div class="hero-bg-lines"></div>
   <div class="hero-fullbg">
-    <img id="heroBgImg" src="https://github.com/JNOHJINGYU/images/blob/main/hero_bg.jpg?raw=true" alt="The New S-Class World Premiere">
+    <img decoding="async" fetchpriority="high" id="heroBgImg" src="https://github.com/JNOHJINGYU/images/blob/main/hero_bg.jpg?raw=true" alt="The New S-Class World Premiere">
   </div>
   <div class="hero-content">
     <div class="hero-text fade-in">
@@ -1178,13 +1067,13 @@
     <p class="section-desc fade-in">전 모델 기본 적용 사양이 대폭 강화되었습니다. 일루미네이티드 그릴, 디지털 라이트, 슈퍼 스크린 등 플래그십에 걸맞은 첨단 사양이 기본으로 제공됩니다.</p>
 
     <div class="facelift-images fade-in">
-      <div class="facelift-img clickable" onclick="openLightbox(this.querySelector('img').src, 'Mercedes-Benz S-Class · 일루미네이티드 그릴 · 디지털 라이트 · 리어 액슬 스티어링')">
-        <img src="https://github.com/JNOHJINGYU/images/blob/main/facelift_1.jpg?raw=true" alt="S-Class Exterior">
+      <div class="facelift-img clickable" data-lb="1" data-caption="Mercedes-Benz S-Class · 일루미네이티드 그릴 · 디지털 라이트 · 리어 액슬 스티어링">
+        <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/facelift_1.jpg?raw=true" alt="S-Class Exterior">
         <div class="zoom-hint">⊕ 전체화면</div>
         <div class="facelift-img-cap">일루미네이티드 그릴 · 디지털 라이트 · 리어 액슬 스티어링</div>
       </div>
-      <div class="facelift-img clickable" onclick="openLightbox(this.querySelector('img').src, 'Mercedes-Benz S-Class · 슈퍼 스크린 · 액티브 앰비언트 라이트 · 앞좌석 열선 벨트')">
-        <img src="https://github.com/JNOHJINGYU/images/blob/main/facelift_2.jpg?raw=true" alt="S-Class Interior">
+      <div class="facelift-img clickable" data-lb="1" data-caption="Mercedes-Benz S-Class · 슈퍼 스크린 · 액티브 앰비언트 라이트 · 앞좌석 열선 벨트">
+        <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/facelift_2.jpg?raw=true" alt="S-Class Interior">
         <div class="zoom-hint">⊕ 전체화면</div>
         <div class="facelift-img-cap">슈퍼 스크린 · 액티브 앰비언트 라이트 · 앞좌석 열선 벨트</div>
       </div>
@@ -1204,7 +1093,7 @@
         <div class="feat-name">슈퍼스크린</div>
         <div class="feat-sub">전 모델 기본</div>
       </div>
-      <div class="feat-card fade-in fade-in-delay-3" style="cursor:pointer;" onclick="openVideoLightbox('feature_video.mp4', 'MB 드라이브 어시스트 · Digital Extra')">
+      <div class="feat-card fade-in fade-in-delay-3" style="cursor:pointer;" data-lb-video="feature_video.mp4" data-caption="MB 드라이브 어시스트 · Digital Extra">
         <div class="feat-name">MB 드라이브 어시스트</div>
         <div class="feat-sub">Digital Extra · 클릭하여 영상 보기</div>
       </div>
@@ -1241,8 +1130,8 @@
     <div class="fade-in" style="margin-top:56px; margin-bottom:-32px;">
       <span style="font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:20px;">Gallery</span>
       <div style="display:grid; grid-template-columns:1fr; gap:4px; border-radius:8px; overflow:hidden; border:1px solid rgba(255,216,107,0.12);">
-        <div class="ext-real-img-wrap" onclick="openLightbox(this.querySelector('img').src, 'Mercedes-Benz S-Class · The Fontenay')">
-          <img src="https://github.com/JNOHJINGYU/images/blob/main/exterior_main.jpg?raw=true" alt="Mercedes-Benz S-Class Exterior">
+        <div class="ext-real-img-wrap" data-lb="1" data-caption="Mercedes-Benz S-Class · The Fontenay">
+          <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/exterior_main.jpg?raw=true" alt="Mercedes-Benz S-Class Exterior">
           <div class="zoom-hint">⊕ 전체화면</div>
         </div>
       </div>
@@ -1252,12 +1141,12 @@
       <div class="ext-card">
         <div class="ext-card-header">Standard</div>
         <div class="ext-images">
-          <div class="ph ext-ph real-img" onclick="openLightbox(this.querySelector('img').src,'S-Class Standard · 후면')">
-            <img src="https://github.com/JNOHJINGYU/images/blob/main/standard_side.png?raw=true" alt="Standard 후면">
+          <div class="ph ext-ph real-img" data-lb="1" data-caption="S-Class Standard · 후면">
+            <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/standard_side.png?raw=true" alt="Standard 후면">
             <div class="zoom-hint">⊕ 전체화면</div>
           </div>
-          <div class="ph ext-ph real-img" onclick="openLightbox(this.querySelector('img').src,'S-Class Standard · 전면')">
-            <img src="https://github.com/JNOHJINGYU/images/blob/main/standard_rear.png?raw=true" alt="Standard 전면">
+          <div class="ph ext-ph real-img" data-lb="1" data-caption="S-Class Standard · 전면">
+            <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/standard_rear.png?raw=true" alt="Standard 전면">
             <div class="zoom-hint">⊕ 전체화면</div>
           </div>
         </div>
@@ -1265,12 +1154,12 @@
       <div class="ext-card">
         <div class="ext-card-header" style="color:var(--accent)">AMG Line</div>
         <div class="ext-images">
-          <div class="ph ext-ph real-img" onclick="openLightbox(this.querySelector('img').src,'S-Class AMG Line · 전면')">
-            <img src="https://github.com/JNOHJINGYU/images/blob/main/ext_amg_side.png?raw=true" alt="AMG Line 전면">
+          <div class="ph ext-ph real-img" data-lb="1" data-caption="S-Class AMG Line · 전면">
+            <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/ext_amg_side.png?raw=true" alt="AMG Line 전면">
             <div class="zoom-hint">⊕ 전체화면</div>
           </div>
-          <div class="ph ext-ph real-img" onclick="openLightbox(this.querySelector('img').src,'S-Class AMG Line · 후면')">
-            <img src="https://github.com/JNOHJINGYU/images/blob/main/ext_amg_rear.png?raw=true" alt="AMG Line 후면">
+          <div class="ph ext-ph real-img" data-lb="1" data-caption="S-Class AMG Line · 후면">
+            <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/ext_amg_rear.png?raw=true" alt="AMG Line 후면">
             <div class="zoom-hint">⊕ 전체화면</div>
           </div>
         </div>
@@ -1278,12 +1167,12 @@
       <div class="ext-card">
         <div class="ext-card-header">Maybach</div>
         <div class="ext-images">
-          <div class="ph ext-ph real-img" onclick="openLightbox(this.querySelector('img').src,'Mercedes-Maybach · 전면')">
-            <img src="https://github.com/JNOHJINGYU/images/blob/main/ext_maybach_side.png?raw=true" alt="Maybach 전면">
+          <div class="ph ext-ph real-img" data-lb="1" data-caption="Mercedes-Maybach · 전면">
+            <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/ext_maybach_side.png?raw=true" alt="Maybach 전면">
             <div class="zoom-hint">⊕ 전체화면</div>
           </div>
-          <div class="ph ext-ph real-img" onclick="openLightbox(this.querySelector('img').src,'Mercedes-Maybach · 후면')">
-            <img src="https://github.com/JNOHJINGYU/images/blob/main/ext_maybach_rear.png?raw=true" alt="Maybach 후면">
+          <div class="ph ext-ph real-img" data-lb="1" data-caption="Mercedes-Maybach · 후면">
+            <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/ext_maybach_rear.png?raw=true" alt="Maybach 후면">
             <div class="zoom-hint">⊕ 전체화면</div>
           </div>
         </div>
@@ -1305,17 +1194,17 @@
         <div class="int-slider" id="leatherSlider">
           <div class="int-slider-track" id="leatherTrack">
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/int_leather_black.jpg?raw=true" alt="가죽 · 블랙">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/int_leather_black.jpg?raw=true" alt="가죽 · 블랙">
               <div class="int-slide-label">블랙</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/int_leather_beige.png?raw=true" alt="가죽 · 베이지">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/int_leather_beige.png?raw=true" alt="가죽 · 베이지">
               <div class="int-slide-label">베이지</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/int_leather_brown.png?raw=true" alt="가죽 · 브라운">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/int_leather_brown.png?raw=true" alt="가죽 · 브라운">
               <div class="int-slide-label">브라운</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
@@ -1342,17 +1231,17 @@
         <div class="int-slider" id="nappaSlider">
           <div class="int-slider-track" id="nappaTrack">
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/int_nappa_brown.png?raw=true" alt="나파 가죽 · 브라운">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/int_nappa_brown.png?raw=true" alt="나파 가죽 · 브라운">
               <div class="int-slide-label">브라운</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/int_nappa_beige.png?raw=true" alt="나파 가죽 · 베이지">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/int_nappa_beige.png?raw=true" alt="나파 가죽 · 베이지">
               <div class="int-slide-label">베이지</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/int_nappa_black.png?raw=true" alt="나파 가죽 · 블랙">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/int_nappa_black.png?raw=true" alt="나파 가죽 · 블랙">
               <div class="int-slide-label">블랙</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
@@ -1378,17 +1267,17 @@
         <div class="int-slider" id="exclNappaSlider">
           <div class="int-slider-track" id="exclNappaTrack">
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/int_excl_nappa_beige.png?raw=true" alt="익스클루시브 나파 가죽 · 베이지">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/int_excl_nappa_beige.png?raw=true" alt="익스클루시브 나파 가죽 · 베이지">
               <div class="int-slide-label">베이지</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/int_excl_nappa_black.png?raw=true" alt="익스클루시브 나파 가죽 · 블랙">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/int_excl_nappa_black.png?raw=true" alt="익스클루시브 나파 가죽 · 블랙">
               <div class="int-slide-label">블랙</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/int_excl_nappa_brown.png?raw=true" alt="익스클루시브 나파 가죽 · 브라운">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/int_excl_nappa_brown.png?raw=true" alt="익스클루시브 나파 가죽 · 브라운">
               <div class="int-slide-label">브라운</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
@@ -1414,22 +1303,22 @@
         <div class="int-slider" id="maybachNappaSlider">
           <div class="int-slider-track" id="maybachNappaTrack">
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/Maybach_nappa_white.png?raw=true" alt="마이바흐 익스클루시브 나파 레더 · 화이트">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/Maybach_nappa_white.png?raw=true" alt="마이바흐 익스클루시브 나파 레더 · 화이트">
               <div class="int-slide-label">화이트</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/Maybach_nappa_black.png?raw=true" alt="마이바흐 익스클루시브 나파 레더 · 블랙">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/Maybach_nappa_black.png?raw=true" alt="마이바흐 익스클루시브 나파 레더 · 블랙">
               <div class="int-slide-label">블랙</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/Maybach_nappa_brown.png?raw=true" alt="마이바흐 익스클루시브 나파 레더 · 브라운">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/Maybach_nappa_brown.png?raw=true" alt="마이바흐 익스클루시브 나파 레더 · 브라운">
               <div class="int-slide-label">브라운</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/Maybach_nappa_beige.png?raw=true" alt="마이바흐 익스클루시브 나파 레더 · 베이지">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/Maybach_nappa_beige.png?raw=true" alt="마이바흐 익스클루시브 나파 레더 · 베이지">
               <div class="int-slide-label">베이지</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
@@ -1456,12 +1345,12 @@
         <div class="int-slider" id="manufakturSlider">
           <div class="int-slider-track" id="manufakturTrack">
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/manufaktur_beige.png?raw=true" alt="MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 베이지">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/manufaktur_beige.png?raw=true" alt="MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 베이지">
               <div class="int-slide-label">베이지 / 골드</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
             <div class="int-slide">
-              <img src="https://github.com/JNOHJINGYU/images/blob/main/manufaktur_navy.png?raw=true" alt="MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 네이비">
+              <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/manufaktur_navy.png?raw=true" alt="MANUFAKTUR 마이바흐 익스클루시브 나파 레더 · 네이비">
               <div class="int-slide-label">네이비 블루</div>
               <div class="zoom-hint">⊕ 전체화면</div>
             </div>
@@ -1499,8 +1388,8 @@
       <div class="lineup-divider"></div>
       <div class="lineup-cards">
         <div class="lineup-card">
-          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" onclick="openLightbox(this.querySelector('img').src,'S 350 d 4MATIC · 샴페인 실버')">
-            <img src="https://github.com/JNOHJINGYU/images/blob/main/s350d.jpg?raw=true" alt="S 350d 4MATIC" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" data-lb="1" data-caption="S 350 d 4MATIC · 샴페인 실버">
+            <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/s350d.jpg?raw=true" alt="S 350d 4MATIC" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
             <span style="position:absolute;bottom:10px;right:12px;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 10px;font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.7);pointer-events:none;">⊕ 전체화면</span>
           </div>
           <div class="lineup-info">
@@ -1524,8 +1413,8 @@
           </div>
         </div>
         <div class="lineup-card">
-          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" onclick="openLightbox(this.querySelector('img').src,'S 450 4MATIC · 폴라 화이트')">
-            <img src="https://github.com/JNOHJINGYU/images/blob/main/s450_swb.jpg?raw=true" alt="S 450 4MATIC" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" data-lb="1" data-caption="S 450 4MATIC · 폴라 화이트">
+            <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/s450_swb.jpg?raw=true" alt="S 450 4MATIC" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
             <span style="position:absolute;bottom:10px;right:12px;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 10px;font-size:10px;letter-spacing:.12em;color:rgba(255,255,255,.7);pointer-events:none;">⊕ 전체화면</span>
           </div>
           <div class="lineup-info">
@@ -1558,7 +1447,7 @@
       <div class="lineup-divider"></div>
       <div class="lineup-cards">
         <div class="lineup-card">
-          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" onclick="openLightbox(this.querySelector('img').src,'S 450 4MATIC Long Exclusive · 네이비 블루')"><img src="https://github.com/JNOHJINGYU/images/blob/main/s450L_EXCL.jpg?raw=true" alt="S 450 4MATIC Long Exclusive · 네이비 블루" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div>
+          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" data-lb="1" data-caption="S 450 4MATIC Long Exclusive · 네이비 블루"><img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/s450L_EXCL.jpg?raw=true" alt="S 450 4MATIC Long Exclusive · 네이비 블루" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div>
           <div class="lineup-info">
             <div class="lineup-code">22316512-KR1</div>
             <div class="lineup-model">S 450 4MATIC Long Exclusive</div>
@@ -1579,7 +1468,7 @@
           </div>
         </div>
         <div class="lineup-card">
-          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" onclick="openLightbox(this.querySelector('img').src,'S 450 4MATIC Long AMG Line · 세이지 그린')"><img src="https://github.com/JNOHJINGYU/images/blob/main/s450L_AMG.jpg?raw=true" alt="S 450 4MATIC Long AMG Line · 세이지 그린" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div>
+          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" data-lb="1" data-caption="S 450 4MATIC Long AMG Line · 세이지 그린"><img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/s450L_AMG.jpg?raw=true" alt="S 450 4MATIC Long AMG Line · 세이지 그린" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div>
           <div class="lineup-info">
             <div class="lineup-code">22316512-KR2</div>
             <div class="lineup-model">S 450 4MATIC Long AMG Line</div>
@@ -1600,7 +1489,7 @@
           </div>
         </div>
         <div class="lineup-card">
-          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" onclick="openLightbox(this.querySelector('img').src,'S 500 4MATIC Long · 셀레나이트 그레이')"><img src="https://github.com/JNOHJINGYU/images/blob/main/s500.jpg?raw=true" alt="S 500 4MATIC Long · 셀레나이트 그레이" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div>
+          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" data-lb="1" data-caption="S 500 4MATIC Long · 셀레나이트 그레이"><img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/s500.jpg?raw=true" alt="S 500 4MATIC Long · 셀레나이트 그레이" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div>
           <div class="lineup-info">
             <div class="lineup-code">22316412-KR1</div>
             <div class="lineup-model">S 500 4MATIC Long</div>
@@ -1622,7 +1511,7 @@
           </div>
         </div>
         <div class="lineup-card">
-          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" onclick="openLightbox(this.querySelector('img').src,'S 580 4MATIC Long · 옵시디안 블랙')"><img src="https://github.com/JNOHJINGYU/images/blob/main/s580.jpg?raw=true" alt="S 580 4MATIC Long · 옵시디안 블랙" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div>
+          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" data-lb="1" data-caption="S 580 4MATIC Long · 옵시디안 블랙"><img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/s580.jpg?raw=true" alt="S 580 4MATIC Long · 옵시디안 블랙" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div>
           <div class="lineup-info">
             <div class="lineup-code">22317712-KR1</div>
             <div class="lineup-model">S 580 4MATIC Long</div>
@@ -1653,7 +1542,7 @@
       <div class="lineup-divider"></div>
       <div class="lineup-cards">
         <div class="lineup-card">
-          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" onclick="openLightbox(this.querySelector('img').src,'Maybach S 580 · 네이비/실버')"><img src="https://github.com/JNOHJINGYU/images/blob/main/maybach_s580.jpg?raw=true" alt="Maybach S 580 · 네이비/실버" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div>
+          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" data-lb="1" data-caption="Maybach S 580 · 네이비/실버"><img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/maybach_s580.jpg?raw=true" alt="Maybach S 580 · 네이비/실버" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div>
           <div class="lineup-info">
             <div class="lineup-code">22397712-KR1</div>
             <div class="lineup-model">Maybach S 580</div>
@@ -1674,7 +1563,7 @@
           </div>
         </div>
         <div class="lineup-card">
-          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" onclick="openLightbox(this.querySelector('img').src,'Maybach S 580 MANUFAKTUR · 블랙/화이트')"><img src="https://github.com/JNOHJINGYU/images/blob/main/maybach_s580_mfk.jpg?raw=true" alt="Maybach S 580 MANUFAKTUR · 블랙/화이트" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div>
+          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" data-lb="1" data-caption="Maybach S 580 MANUFAKTUR · 블랙/화이트"><img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/maybach_s580_mfk.jpg?raw=true" alt="Maybach S 580 MANUFAKTUR · 블랙/화이트" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div>
           <div class="lineup-info">
             <div class="lineup-code">22397712-KR2</div>
             <div class="lineup-model">Maybach S 580 MANUFAKTUR</div>
@@ -1695,7 +1584,7 @@
           </div>
         </div>
         <div class="lineup-card">
-          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" onclick="openLightbox(this.querySelector('img').src,'Maybach S 680 · 그린/화이트')"><img src="https://github.com/JNOHJINGYU/images/blob/main/maybach_s680.jpg?raw=true" alt="Maybach S 680 · 그린/화이트" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div>
+          <div class="lineup-img" style="background:#f2f2f0;overflow:hidden;cursor:zoom-in;position:relative;" data-lb="1" data-caption="Maybach S 680 · 그린/화이트"><img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/maybach_s680.jpg?raw=true" alt="Maybach S 680 · 그린/화이트" style="width:100%;height:100%;object-fit:contain;display:block;padding:10px;box-sizing:border-box;transition:transform .5s cubic-bezier(.25,.46,.45,.94);" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div>
           <div class="lineup-info">
             <div class="lineup-code">22397912-KR1</div>
             <div class="lineup-model">Maybach S 680</div>
@@ -1843,38 +1732,38 @@
             <tr>
               <td class="og-row-label">우드 트림</td>
               <td class="og-cell" data-col="0">
-                <div class="og-img-ph" onclick="openLightbox(this.querySelector('img').src, this.dataset.caption)" data-caption="S 350d 4MATIC · 엔트리사이트 오픈포어 우드 트림">
-                  <img src="https://github.com/JNOHJINGYU/images/blob/main/wood_s350d.jpg?raw=true" alt="엔트리사이트 오픈포어 우드 트림" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'og-img-ph-fallback\'>WOOD TRIM<br>IMAGE</div>'">
+                <div class="og-img-ph" data-lb="1" data-caption="S 350d 4MATIC · 엔트리사이트 오픈포어 우드 트림">
+                  <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/wood_s350d.jpg?raw=true" alt="엔트리사이트 오픈포어 우드 트림" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'og-img-ph-fallback\'>WOOD TRIM<br>IMAGE</div>'">
                 </div>
                 <div class="og-wood-cap">엔트리사이트<br>오픈포어 우드 트림</div>
               </td>
               <td class="og-cell" data-col="1">
-                <div class="og-img-ph" onclick="openLightbox(this.querySelector('img').src, this.dataset.caption)" data-caption="S 450 4MATIC · 오픈포어 브라운 우드 트림, 피시본 패턴">
-                  <img src="https://github.com/JNOHJINGYU/images/blob/main/wood_s450.jpg?raw=true" alt="오픈포어 브라운 우드 트림" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'og-img-ph-fallback\'>WOOD TRIM<br>IMAGE</div>'">
+                <div class="og-img-ph" data-lb="1" data-caption="S 450 4MATIC · 오픈포어 브라운 우드 트림, 피시본 패턴">
+                  <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/wood_s450.jpg?raw=true" alt="오픈포어 브라운 우드 트림" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'og-img-ph-fallback\'>WOOD TRIM<br>IMAGE</div>'">
                 </div>
                 <div class="og-wood-cap">오픈포어 브라운 우드 트림<br>피시본 패턴</div>
               </td>
               <td class="og-cell" data-col="2">
-                <div class="og-img-ph" onclick="openLightbox(this.querySelector('img').src, this.dataset.caption)" data-caption="S 450 4MATIC Long Exclusive · 오픈포어 브라운 우드 트림, 피시본 패턴">
-                  <img src="https://github.com/JNOHJINGYU/images/blob/main/wood_s450l_excl.jpg?raw=true" alt="오픈포어 브라운 우드 트림" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'og-img-ph-fallback\'>WOOD TRIM<br>IMAGE</div>'">
+                <div class="og-img-ph" data-lb="1" data-caption="S 450 4MATIC Long Exclusive · 오픈포어 브라운 우드 트림, 피시본 패턴">
+                  <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/wood_s450l_excl.jpg?raw=true" alt="오픈포어 브라운 우드 트림" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'og-img-ph-fallback\'>WOOD TRIM<br>IMAGE</div>'">
                 </div>
                 <div class="og-wood-cap">오픈포어 브라운 우드 트림<br>피시본 패턴</div>
               </td>
               <td class="og-cell" data-col="3">
-                <div class="og-img-ph" onclick="openLightbox(this.querySelector('img').src, this.dataset.caption)" data-caption="S 450 4MATIC Long AMG Line · 하이글로스 카본 파이버 트림">
-                  <img src="https://github.com/JNOHJINGYU/images/blob/main/wood_s450l_amg.jpg?raw=true" alt="하이글로스 카본 파이버 트림" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'og-img-ph-fallback\'>TRIM<br>IMAGE</div>'">
+                <div class="og-img-ph" data-lb="1" data-caption="S 450 4MATIC Long AMG Line · 하이글로스 카본 파이버 트림">
+                  <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/wood_s450l_amg.jpg?raw=true" alt="하이글로스 카본 파이버 트림" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'og-img-ph-fallback\'>TRIM<br>IMAGE</div>'">
                 </div>
                 <div class="og-wood-cap">하이글로스<br>카본 파이버 트림</div>
               </td>
               <td class="og-cell" data-col="4">
-                <div class="og-img-ph" onclick="openLightbox(this.querySelector('img').src, this.dataset.caption)" data-caption="S 500 4MATIC Long · 유광 월넛 우드 트림, 블랙">
-                  <img src="https://github.com/JNOHJINGYU/images/blob/main/wood_s500l.jpg?raw=true" alt="유광 월넛 우드 트림" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'og-img-ph-fallback\'>WOOD TRIM<br>IMAGE</div>'">
+                <div class="og-img-ph" data-lb="1" data-caption="S 500 4MATIC Long · 유광 월넛 우드 트림, 블랙">
+                  <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/wood_s500l.jpg?raw=true" alt="유광 월넛 우드 트림" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'og-img-ph-fallback\'>WOOD TRIM<br>IMAGE</div>'">
                 </div>
                 <div class="og-wood-cap">유광 월넛 우드 트림<br>블랙</div>
               </td>
               <td class="og-cell" data-col="5">
-                <div class="og-img-ph" onclick="openLightbox(this.querySelector('img').src, this.dataset.caption)" data-caption="S 580 4MATIC Long · MANUFAKTUR 플로잉 라인 피아노 래커 트림, 블랙">
-                  <img src="https://github.com/JNOHJINGYU/images/blob/main/wood_s580l.jpg?raw=true" alt="MANUFAKTUR 플로잉 라인 피아노 래커 트림" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'og-img-ph-fallback\'>WOOD TRIM<br>IMAGE</div>'">
+                <div class="og-img-ph" data-lb="1" data-caption="S 580 4MATIC Long · MANUFAKTUR 플로잉 라인 피아노 래커 트림, 블랙">
+                  <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/wood_s580l.jpg?raw=true" alt="MANUFAKTUR 플로잉 라인 피아노 래커 트림" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'og-img-ph-fallback\'>WOOD TRIM<br>IMAGE</div>'">
                 </div>
                 <div class="og-wood-cap">MANUFAKTUR 플로잉 라인<br>피아노 래커 트림, 블랙</div>
               </td>
@@ -2092,8 +1981,8 @@
       <div class="launch-model-title">S 450 4M L AMG Line – AMG 라인 플러스 에디션</div>
       <div class="launch-limited">22316512-KR2 · 140대 한정</div>
       <div class="launch-body">
-        <div class="launch-main-img launch-img-clickable" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
-          <img src="https://github.com/JNOHJINGYU/images/blob/main/amg_white_side.png?raw=true" alt="S 450 4M L AMG Line 측면" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.25,.46,.45,.94);">
+        <div class="launch-main-img launch-img-clickable" data-lb="1">
+          <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/amg_white_side.png?raw=true" alt="S 450 4M L AMG Line 측면" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.25,.46,.45,.94);">
           <div class="launch-img-zoom-hint">클릭하여 확대</div>
         </div>
         <div class="launch-spec-panel">
@@ -2120,20 +2009,20 @@
         </div>
       </div>
       <div class="launch-thumbs">
-        <div class="launch-thumb launch-img-clickable" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
-          <img src="https://github.com/JNOHJINGYU/images/blob/main/amg_white_side.png?raw=true" alt="측면" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
+        <div class="launch-thumb launch-img-clickable" data-lb="1">
+          <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/amg_white_side.png?raw=true" alt="측면" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
           <div class="launch-img-zoom-hint">확대</div>
         </div>
-        <div class="launch-thumb launch-img-clickable" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
-          <img src="https://github.com/JNOHJINGYU/images/blob/main/amg_white_front.png?raw=true" alt="정면" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
+        <div class="launch-thumb launch-img-clickable" data-lb="1">
+          <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/amg_white_front.png?raw=true" alt="정면" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
           <div class="launch-img-zoom-hint">확대</div>
         </div>
-        <div class="launch-thumb launch-img-clickable" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
-          <img src="https://github.com/JNOHJINGYU/images/blob/main/amg_white_interior_rear.png?raw=true" alt="인테리어 후석" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
+        <div class="launch-thumb launch-img-clickable" data-lb="1">
+          <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/amg_white_interior_rear.png?raw=true" alt="인테리어 후석" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
           <div class="launch-img-zoom-hint">확대</div>
         </div>
-        <div class="launch-thumb launch-img-clickable" onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').alt)">
-          <img src="https://github.com/JNOHJINGYU/images/blob/main/amg_interior_driver.png?raw=true" alt="대시보드" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
+        <div class="launch-thumb launch-img-clickable" data-lb="1">
+          <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/amg_interior_driver.png?raw=true" alt="대시보드" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;">
           <div class="launch-img-zoom-hint">확대</div>
         </div>
       </div>
@@ -2145,8 +2034,8 @@
       <div class="launch-model-title">S 500 4M L – MANUFAKTUR 스파클링 블랙 에디션</div>
       <div class="launch-limited">22316412-KR1 · 140대 한정</div>
       <div class="launch-body">
-        <div class="launch-main-img launch-img-clickable" onclick="openLightbox(this.querySelector('img').src,'S 500 4MATIC Long – MANUFAKTUR 스파클링 블랙 측면')">
-          <img src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_side.png?raw=true" alt="S 500 4MATIC L 메인 이미지" loading="lazy">
+        <div class="launch-main-img launch-img-clickable" data-lb="1" data-caption="S 500 4MATIC Long – MANUFAKTUR 스파클링 블랙 측면">
+          <img decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_side.png?raw=true" alt="S 500 4MATIC L 메인 이미지" loading="lazy">
           <div class="launch-img-zoom-hint">클릭하여 확대</div>
         </div>
         <div class="launch-spec-panel">
@@ -2173,20 +2062,20 @@
         </div>
       </div>
       <div class="launch-thumbs">
-        <div class="launch-thumb" onclick="openLightbox(this.querySelector('img').src,'S 500 4MATIC Long – 측면')">
-          <img src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_side.png?raw=true" alt="외관 이미지 1" loading="lazy">
+        <div class="launch-thumb" data-lb="1" data-caption="S 500 4MATIC Long – 측면">
+          <img decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_side.png?raw=true" alt="외관 이미지 1" loading="lazy">
           <div class="launch-img-zoom-hint">확대</div>
         </div>
-        <div class="launch-thumb" onclick="openLightbox(this.querySelector('img').src,'S 500 4MATIC Long – 정면')">
-          <img src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_front.png?raw=true" alt="외관 이미지 2" loading="lazy">
+        <div class="launch-thumb" data-lb="1" data-caption="S 500 4MATIC Long – 정면">
+          <img decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_front.png?raw=true" alt="외관 이미지 2" loading="lazy">
           <div class="launch-img-zoom-hint">확대</div>
         </div>
-        <div class="launch-thumb" onclick="openLightbox(this.querySelector('img').src,'S 500 4MATIC Long – 인테리어 후석')">
-          <img src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_interior_rear.png?raw=true" alt="인테리어 이미지" loading="lazy">
+        <div class="launch-thumb" data-lb="1" data-caption="S 500 4MATIC Long – 인테리어 후석">
+          <img decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_interior_rear.png?raw=true" alt="인테리어 이미지" loading="lazy">
           <div class="launch-img-zoom-hint">확대</div>
         </div>
-        <div class="launch-thumb" onclick="openLightbox(this.querySelector('img').src,'S 500 4MATIC Long – 대시보드')">
-          <img src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_interior_driver.png?raw=true" alt="디테일 이미지" loading="lazy">
+        <div class="launch-thumb" data-lb="1" data-caption="S 500 4MATIC Long – 대시보드">
+          <img decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/sparkling_black_interior_driver.png?raw=true" alt="디테일 이미지" loading="lazy">
           <div class="launch-img-zoom-hint">확대</div>
         </div>
       </div>
@@ -2205,7 +2094,7 @@
       <div class="consultant-profile">
         <!-- ↓ 프로필 이미지 URL을 아래 src에 입력하세요 -->
         <div style="aspect-ratio:3/4;border-radius:8px;overflow:hidden;background:#0f1318;border:1px solid rgba(255,216,107,0.15);">
-          <img src="https://github.com/JNOHJINGYU/images/blob/main/nohjingyu.jpg?raw=true" alt="노진규 부장 프로필"
+          <img loading="lazy" decoding="async" src="https://github.com/JNOHJINGYU/images/blob/main/nohjingyu.jpg?raw=true" alt="노진규 부장 프로필"
             style="width:100%;height:100%;object-fit:cover;display:block;"
             onerror="this.style.display='none';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.innerHTML='<span style=\'font-size:10px;letter-spacing:.3em;color:rgba(255,216,107,0.4);text-transform:uppercase;\'>PROFILE IMAGE</span>';"
           >
@@ -2262,7 +2151,7 @@
   <button class="lightbox-gallery-prev" id="lbGalleryPrev">&#8249;</button>
   <button class="lightbox-gallery-next" id="lbGalleryNext">&#8250;</button>
   <div class="lightbox-img-wrap" id="lightboxImgWrap">
-    <img id="lightboxImg" src="" alt="">
+    <img decoding="async" id="lightboxImg" src="" alt="">
   </div>
   <div class="lightbox-video-wrap">
     <video id="lightboxVideo" controls playsinline>
@@ -2285,11 +2174,17 @@
 
 
   <script>
-// Sticky nav
+// Sticky nav — scroll 이벤트는 rAF로 스로틀링하고 passive로 등록해 스크롤 성능 저하 방지
   const nav = document.getElementById('mainNav');
+  let _navTicking = false;
   window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-  });
+    if (_navTicking) return;
+    _navTicking = true;
+    requestAnimationFrame(() => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+      _navTicking = false;
+    });
+  }, { passive: true });
 
   // Scroll fade-in
   const observer = new IntersectionObserver((entries) => {
@@ -2572,6 +2467,22 @@
     }
   }, { passive: true });
 
+  // ── 라이트박스 트리거 이벤트 위임 (개별 onclick 대신 document 1개 리스너로 처리) ──
+  // data-lb="1" : 이미지 확대, data-lb-video : 영상 재생
+  document.addEventListener('click', (e) => {
+    const videoTrigger = e.target.closest('[data-lb-video]');
+    if (videoTrigger) {
+      openVideoLightbox(videoTrigger.dataset.lbVideo, videoTrigger.dataset.caption || '');
+      return;
+    }
+    const trigger = e.target.closest('[data-lb]');
+    if (trigger) {
+      const img = trigger.querySelector('img');
+      if (!img) return;
+      openLightbox(img.src, trigger.dataset.caption || img.alt || '');
+    }
+  });
+
   // ── 내장디자인 int-slide 갤러리 클릭 이벤트 ──
   // DOMContentLoaded 후 바인딩 (이미지 src 가 img 태그에 이미 로드됨)
   document.querySelectorAll('.int-card-leather').forEach(card => {
@@ -2591,20 +2502,37 @@
     });
   });
 
-  // ── OPTION GUIDE: Hover 시 Column Highlight ──
+  // ── OPTION GUIDE: Hover 시 Column Highlight (이벤트 위임 + 컬럼 캐시로 최소 계산) ──
   (function() {
     const ogTable = document.getElementById('ogTable');
     if (!ogTable) return;
-    const cells = ogTable.querySelectorAll('[data-col]');
-    cells.forEach(cell => {
+
+    // 컬럼별 엘리먼트를 1회만 수집해 캐시 (매 hover마다 querySelectorAll 재실행 방지)
+    const colMap = new Map();
+    ogTable.querySelectorAll('[data-col]').forEach(cell => {
       const col = cell.getAttribute('data-col');
-      cell.addEventListener('mouseenter', () => {
-        ogTable.querySelectorAll(`[data-col="${col}"]`).forEach(c => c.classList.add('og-col-hover'));
-      });
-      cell.addEventListener('mouseleave', () => {
-        ogTable.querySelectorAll(`[data-col="${col}"]`).forEach(c => c.classList.remove('og-col-hover'));
-      });
+      if (!colMap.has(col)) colMap.set(col, []);
+      colMap.get(col).push(cell);
     });
+
+    let activeCol = null;
+    function setActiveCol(col) {
+      if (col === activeCol) return;
+      if (activeCol !== null && colMap.has(activeCol)) {
+        colMap.get(activeCol).forEach(c => c.classList.remove('og-col-hover'));
+      }
+      if (col !== null && colMap.has(col)) {
+        colMap.get(col).forEach(c => c.classList.add('og-col-hover'));
+      }
+      activeCol = col;
+    }
+
+    // 셀 하나하나가 아닌 테이블 전체에 위임된 리스너 2개만 사용
+    ogTable.addEventListener('mouseover', (e) => {
+      const cell = e.target.closest('[data-col]');
+      setActiveCol(cell ? cell.getAttribute('data-col') : null);
+    });
+    ogTable.addEventListener('mouseleave', () => setActiveCol(null));
   })();
 
 </script>
