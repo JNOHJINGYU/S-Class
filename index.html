@@ -534,12 +534,16 @@
     border-right:1px solid rgba(255,216,107,0.15) !important;
     vertical-align:middle;
   }
-  .og2-cell { padding:18px 16px; vertical-align:top; }
+  .og2-cell { padding:22px 20px; vertical-align:top; }
   .og2-col-title {
     font-size:13px; font-weight:700; color:var(--white); letter-spacing:.01em;
     margin-bottom:12px; padding-bottom:10px; line-height:1.4;
     border-bottom:1px solid rgba(255,216,107,0.15);
     word-break:keep-all;
+  }
+  /* "모델별 추가 옵션" 4개 컬럼(공통사양 제외)의 제목만 더 크고 굵게 */
+  .og2-cell:not(.og2-common) > .og2-col-title {
+    font-size:16px; font-weight:800; margin-bottom:16px; padding-bottom:12px;
   }
   .og2-list { list-style:none; font-size:12px; color:rgba(255,255,255,0.8); line-height:1.6; }
   .og2-list li {
@@ -553,6 +557,31 @@
   .og2-list li.og2-sub::before {
     content:''; position:absolute; left:0; top:12px;
     width:3px; height:9px; background:var(--accent-dim);
+  }
+
+  /* 모델별 추가 옵션(공통사양 제외) 리스트: 대표옵션↔하위옵션 계층 구조 */
+  .og2-list:not(.og2-grid2) li {
+    padding:11px 0;
+    border-bottom:none;
+    font-weight:400;
+    font-size:13px;
+    color:rgba(255,255,255,0.82);
+  }
+  .og2-list:not(.og2-grid2) li:not(.og2-sub) {
+    font-weight:600;
+    color:var(--white);
+    border-bottom:1px solid rgba(255,216,107,0.15);
+  }
+  .og2-list:not(.og2-grid2) li:not(.og2-sub):last-child {
+    border-bottom:none !important;
+  }
+  .og2-list:not(.og2-grid2) li.og2-sub {
+    padding-left:16px;
+    font-weight:400;
+    color:rgba(255,255,255,0.82);
+  }
+  .og2-list:not(.og2-grid2) li.og2-sub::before {
+    top:16px;
   }
 
   /* 전 모델 공통 사양 ↔ 모델별 추가 옵션 연결(Gold Dashed Line + Plus Badge) */
@@ -1872,7 +1901,7 @@
               <td class="og2-cell">
                 <div class="og2-col-title">뒷좌석 컴포트 패키지</div>
                 <ul class="og2-list">
-                  <li>디자인 나이트 내장</li>
+                  <li>디자인 벨트 버클</li>
                   <li class="og2-sub">뒷좌석 무선 충전</li>
                   <li class="og2-sub">뒷좌석 MBUX 리모트 컨트롤</li>
                   <li class="og2-sub">뒷좌석 에어백</li>
@@ -1898,7 +1927,7 @@
               </td>
 
               <td class="og2-cell">
-                <div class="og2-col-title">익스클루시브 내피 가죽</div>
+                <div class="og2-col-title">익스클루시브 나파 가죽</div>
                 <ul class="og2-list">
                   <li>MBUX 증강현실 헤드업 디스플레이</li>
                   <li>3D 계기반</li>
