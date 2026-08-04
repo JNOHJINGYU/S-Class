@@ -555,6 +555,25 @@
     width:3px; height:9px; background:var(--accent-dim);
   }
 
+  /* 전 모델 공통 사양 ↔ 모델별 추가 옵션 연결(Gold Dashed Line + Plus Badge) */
+  .og2-common {
+    position:relative;
+    border-right:1px dashed rgba(255,216,107,0.5) !important;
+  }
+  .og2-plus {
+    position:absolute; top:50%; right:0; z-index:3;
+    transform:translate(50%,-50%);
+    width:36px; height:36px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px; line-height:1; font-weight:600;
+    color:var(--accent); background:#0d1015;
+    border:1px solid rgba(255,216,107,0.5);
+  }
+  .og2-group-label {
+    font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:8px; opacity:.85;
+  }
+
   /* ─── FOOTER ─── */
   footer {
     background:var(--black); border-top:1px solid rgba(255,255,255,0.05);
@@ -706,6 +725,7 @@
     .og-table { min-width:950px; }
     .og-table thead th, .og-corner { top:60px; }
     .og2-cell { padding:16px 14px; }
+    .og2-plus { width:30px; height:30px; font-size:14px; }
   }
 
   /* ─── LIGHTBOX ─── */
@@ -1836,9 +1856,11 @@
                   <li>Digital Extra: 360° 카메라 주차 어시스트</li>
                   <li>Digital Extra: MB 드라이브 어시스트</li>
                 </ul>
+                <span class="og2-plus" aria-hidden="true">+</span>
               </td>
 
               <td class="og2-cell">
+                <div class="og2-group-label">모델별 추가 옵션</div>
                 <div class="og2-col-title">메모리 기능 포함<br>뒷좌석 전동 시트</div>
                 <ul class="og2-list">
                   <li>뒷좌석 메모리 기능</li>
