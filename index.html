@@ -421,8 +421,13 @@
   }
   .og-scroll::-webkit-scrollbar { height:6px; }
   .og-scroll::-webkit-scrollbar-thumb { background:rgba(255,216,107,0.25); border-radius:3px; }
-  /* 컬럼 폭을 콘텐츠가 편안히 들어가는 선에서 최소화해 불필요한 가로 스크롤 방지 */
-  .og-table { border-collapse:separate; border-spacing:0; width:100%; min-width:1140px; table-layout:auto; }
+  /* 모델별 옵션표 + 공통 사양 표를 하나의 table·colgroup으로 묶어 세로 구분선을 항상 일치시킴 */
+  .og-table {
+    border-collapse:separate; border-spacing:0; width:100%; min-width:1140px;
+    table-layout:fixed;
+  }
+  .og-col-label { width:150px; }
+  .og-col-model { width:165px; }
   .og-table th, .og-table td {
     border-bottom:1px solid rgba(255,255,255,0.06);
     border-right:1px solid rgba(255,255,255,0.05);
@@ -439,14 +444,14 @@
   nav.scrolled ~ * .og-table thead th { top:56px; }
   .og-corner {
     position:sticky; left:0; top:68px; z-index:40;
-    background:#0c0f14; min-width:150px; width:150px;
+    background:#0c0f14;
     border-right:1px solid rgba(255,216,107,0.15) !important;
   }
   .og-corner-inner {
     padding:20px 16px; font-size:11px; letter-spacing:.2em; text-transform:uppercase;
     color:var(--accent); display:flex; align-items:center; height:100%;
   }
-  .og-card { padding:20px 14px 18px; min-width:165px; text-align:left; position:relative; }
+  .og-card { padding:20px 14px 18px; text-align:left; position:relative; }
   .og-card-tag {
     display:inline-block; font-size:9.5px; letter-spacing:.18em; text-transform:uppercase;
     color:var(--accent); border:1px solid rgba(255,216,107,0.3); border-radius:3px;
@@ -465,7 +470,7 @@
   /* 옵션명 첫번째 컬럼 (Sticky) */
   .og-row-label {
     position:sticky; left:0; z-index:10;
-    background:#0d1015; min-width:150px; width:150px;
+    background:#0d1015;
     font-size:13px; color:rgba(255,255,255,0.9); font-weight:500;
     padding:16px 16px; letter-spacing:.01em; word-break:keep-all;
     border-right:1px solid rgba(255,216,107,0.15) !important;
@@ -474,7 +479,7 @@
   .og-table tbody tr:nth-child(even) td.og-cell { background:rgba(255,255,255,0.012); }
 
   .og-cell {
-    min-width:165px; padding:16px 14px; text-align:center;
+    padding:16px 14px; text-align:center;
     font-size:13px; color:rgba(255,255,255,0.85); vertical-align:middle;
     transition:background .2s;
   }
@@ -509,33 +514,27 @@
 
   .og-footnote { margin-top:18px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.08); font-size:12px; color:rgba(255,255,255,0.4); line-height:1.9; word-break:keep-all; }
 
-  /* ─── OPTION GUIDE: 공통 사양 + 모델별 추가 옵션 (보조 표, 기존 표와 여백 없이 한 카드로 연결) ─── */
-  .og-sub-header {
-    padding:18px 20px 12px;
+  /* ─── OPTION GUIDE: 공통 사양 + 모델별 추가 옵션 (같은 table 안에서 이어지는 보조 표) ─── */
+  .og-title-cell {
+    padding:18px 20px 12px !important;
     border-top:1px solid rgba(255,216,107,0.18);
-    border-bottom:1px solid rgba(255,216,107,0.18);
+    border-bottom:1px solid rgba(255,216,107,0.18) !important;
     background:linear-gradient(180deg,#0d1015 0%, #0a0c10 100%);
   }
   .og-sub-title {
     font-size:11px; letter-spacing:.25em; text-transform:uppercase;
     color:var(--accent); font-weight:600;
   }
-  .og-table2 { border-collapse:separate; border-spacing:0; width:100%; min-width:1150px; table-layout:auto; }
-  .og-table2 td {
-    border-right:1px solid rgba(255,255,255,0.05);
-    vertical-align:top;
-  }
-  .og-table2 td:last-child { border-right:none; }
   .og2-label {
     position:sticky; left:0; z-index:5;
-    background:#0d1015; min-width:88px; width:88px;
+    background:#0d1015;
     font-size:12px; color:rgba(255,255,255,0.85); font-weight:500;
     letter-spacing:.06em; text-align:center; line-height:1.6;
-    padding:20px 8px; word-break:keep-all;
+    padding:20px 10px; word-break:keep-all;
     border-right:1px solid rgba(255,216,107,0.15) !important;
+    vertical-align:middle;
   }
-  .og2-cell { min-width:184px; padding:18px 16px; }
-  .og2-cell.og2-wide { min-width:320px; }
+  .og2-cell { padding:18px 16px; vertical-align:top; }
   .og2-col-title {
     font-size:13px; font-weight:700; color:var(--white); letter-spacing:.01em;
     margin-bottom:12px; padding-bottom:10px; line-height:1.4;
@@ -548,7 +547,7 @@
     word-break:keep-all;
   }
   .og2-list li:last-child { border-bottom:none; }
-  .og2-list.og2-grid2 { columns:2; column-gap:22px; }
+  .og2-list.og2-grid2 { columns:2; column-gap:18px; }
   .og2-list.og2-grid2 li { break-inside:avoid; }
   .og2-list li.og2-sub { padding-left:12px; position:relative; }
   .og2-list li.og2-sub::before {
@@ -735,15 +734,13 @@
       word-break: keep-all;
       overflow-wrap: break-word;
     }
-    /* Option Guide 모바일 최적화 */
+    /* Option Guide 모바일 최적화 — colgroup 폭만 바꾸면 위/아래 표가 함께 맞춰짐 */
     .og-outer { padding:0 16px; margin-top:40px; }
-    .og-corner, .og-row-label { min-width:110px; width:110px; }
-    .og-card, .og-cell { min-width:140px; }
+    .og-col-label { width:110px; }
+    .og-col-model { width:140px; }
+    .og-table { min-width:950px; }
     .og-table thead th, .og-corner { top:60px; }
-    /* 공통 사양 + 모델별 추가 옵션 보조 표: 컬럼 최소폭 유지, 좌우 스와이프 */
-    .og2-label { min-width:80px; width:80px; }
-    .og2-cell { min-width:190px; padding:16px 16px; }
-    .og2-cell.og2-wide { min-width:320px; }
+    .og2-cell { padding:16px 14px; }
   }
 
   /* ─── LIGHTBOX ─── */
@@ -1682,6 +1679,15 @@
     <div class="og-wrap">
       <div class="og-scroll">
         <table class="og-table" id="ogTable">
+          <colgroup>
+            <col class="og-col-label">
+            <col class="og-col-model">
+            <col class="og-col-model">
+            <col class="og-col-model">
+            <col class="og-col-model">
+            <col class="og-col-model">
+            <col class="og-col-model">
+          </colgroup>
           <thead>
             <tr>
               <th class="og-corner"><div class="og-corner-inner">모델별 세부 사양 비교</div></th>
@@ -1829,22 +1835,17 @@
               </td>
             </tr>
 
-          </tbody>
-        </table>
-      </div>
+            <!-- 공통 사양 + 모델별 추가 옵션 (같은 table·colgroup 안에서 이어져 세로선이 위쪽 표와 정확히 일치) -->
+            <tr class="og-title-row">
+              <td colspan="7" class="og-title-cell">
+                <span class="og-sub-title">공통 사양 + 모델별 추가 옵션</span>
+              </td>
+            </tr>
 
-      <!-- 공통 사양 + 모델별 추가 옵션 (기존 표 아래에 여백 없이 연결) -->
-      <div class="og-sub-header">
-        <span class="og-sub-title">공통 사양 + 모델별 추가 옵션</span>
-      </div>
-
-      <div class="og-scroll">
-        <table class="og-table2" id="ogTable2">
-          <tbody>
             <tr>
               <td class="og2-label">옵션<br>구성</td>
 
-              <td class="og2-cell og2-wide">
+              <td colspan="2" class="og2-cell og2-common">
                 <div class="og2-col-title">전 모델 공통 사양 (22종)</div>
                 <ul class="og2-list og2-grid2">
                   <li>일루미네이티드 라디에이터 그릴</li>
@@ -1921,6 +1922,7 @@
                 </ul>
               </td>
             </tr>
+
           </tbody>
         </table>
       </div>
